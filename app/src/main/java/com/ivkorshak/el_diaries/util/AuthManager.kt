@@ -26,4 +26,19 @@ class AuthManager(private val context: Context) {
         sharedPreferences.edit().remove(Constants.USER_KEY).apply()
     }
 
+    fun getRole(): String {
+        val sharedPreferences = context.getSharedPreferences(Constants.SHARED_PREF_NAME, Context.MODE_PRIVATE)
+        return sharedPreferences.getString(Constants.ROLE_KEY, "") ?: ""
+    }
+
+    fun saveRole(role: String) {
+        val sharedPreferences = context.getSharedPreferences(Constants.SHARED_PREF_NAME, Context.MODE_PRIVATE)
+        sharedPreferences.edit().putString(Constants.ROLE_KEY, role).apply()
+    }
+
+    fun removeRole() {
+        val sharedPreferences = context.getSharedPreferences(Constants.SHARED_PREF_NAME, Context.MODE_PRIVATE)
+        sharedPreferences.edit().remove(Constants.ROLE_KEY).apply()
+    }
+
 }
