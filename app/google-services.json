@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "441333134657",
+    "project_id": "diaries-df98d",
+    "storage_bucket": "diaries-df98d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:441333134657:android:fd41c134f7a654d7dd5dc0",
+        "android_client_info": {
+          "package_name": "com.ivkorshak.el_diaries"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAaqSOtoqH66lIrKQWZl12BRvZIBPmMg7E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
