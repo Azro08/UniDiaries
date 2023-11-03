@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/admin_nav_graph"
+    app:startDestination="@id/accountsListFragment">
+
+    <fragment
+        android:id="@+id/classesListFragment"
+        android:name="com.ivkorshak.el_diaries.presentation.admin.ClassesListFragment"
+        android:label="fragment_classes_list"
+        tools:layout="@layout/fragment_classes_list" >
+        <action
+            android:id="@+id/nav_classes_to_add_class"
+            app:destination="@id/addClassFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addAccountFragment"
+        android:name="com.ivkorshak.el_diaries.presentation.admin.AddAccountFragment"
+        android:label="fragment_add_account"
+        tools:layout="@layout/fragment_add_account" />
+    <fragment
+        android:id="@+id/accountsListFragment"
+        android:name="com.ivkorshak.el_diaries.presentation.admin.AccountsListFragment"
+        android:label="fragment_accounts_list"
+        tools:layout="@layout/fragment_accounts_list" >
+        <action
+            android:id="@+id/nav_acounts_to_add_acounts"
+            app:destination="@id/addAccountFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addClassFragment"
+        android:name="com.ivkorshak.el_diaries.presentation.admin.AddClassFragment"
+        android:label="fragment_add_class"
+        tools:layout="@layout/fragment_add_class" />
+    <fragment
+        android:id="@+id/feedBackFragment"
+        android:name="com.ivkorshak.el_diaries.presentation.admin.FeedBackFragment"
+        android:label="fragment_feed_back"
+        tools:layout="@layout/fragment_feed_back" />
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.ivkorshak.el_diaries.presentation.common.ProfileFragment"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile" />
+</navigation>

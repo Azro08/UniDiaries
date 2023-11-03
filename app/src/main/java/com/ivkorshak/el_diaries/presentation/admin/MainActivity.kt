@@ -1,8 +1,13 @@
-package com.ivkorshak.el_diaries.presentation
+package com.ivkorshak.el_diaries.presentation.admin
 
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.findNavController
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupActionBarWithNavController
+import androidx.navigation.ui.setupWithNavController
+import com.ivkorshak.el_diaries.R
 import com.ivkorshak.el_diaries.databinding.ActivityMainBinding
 import com.ivkorshak.el_diaries.presentation.auth.AuthActivity
 import com.ivkorshak.el_diaries.presentation.student.StudentsActivity
@@ -23,12 +28,27 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         _binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        supportActionBar?.hide()
         if (!authManager.isLoggedIn()) {
             startActivity(Intent(this, AuthActivity::class.java))
             this.finish()
         } else getRole()
 
+        setBottomNavBar()
+
+    }
+
+    private fun setBottomNavBar() {
+        val navController = findNavController(R.id.nav_host)
+        // Passing each menu ID as a set of Ids because each
+        // menu should be considered as top level destinations.
+        val appBarConfiguration = AppBarConfiguration(
+            setOf(
+                R.id.accountsListFragment, R.id.classesListFragment, R.id.feedBackFragment, R.id.profileFragment
+            )
+        )
+        setupActionBarWithNavController(navController, appBarConfiguration)
+        binding.navView.setupWithNavController(navController)
     }
 
     private fun getRole() {

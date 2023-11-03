@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.google.firebase.auth.FirebaseAuth
 import com.ivkorshak.el_diaries.databinding.ActivityAuthBinding
-import com.ivkorshak.el_diaries.presentation.MainActivity
+import com.ivkorshak.el_diaries.presentation.admin.MainActivity
 import com.ivkorshak.el_diaries.presentation.student.StudentsActivity
 import com.ivkorshak.el_diaries.presentation.teacher.TeachersActivity
 import com.ivkorshak.el_diaries.util.AuthManager
