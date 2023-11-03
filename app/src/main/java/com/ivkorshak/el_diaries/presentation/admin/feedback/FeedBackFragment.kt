@@ -1,4 +1,4 @@
-package com.ivkorshak.el_diaries.presentation.admin
+package com.ivkorshak.el_diaries.presentation.admin.feedback
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -6,16 +6,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.ivkorshak.el_diaries.R
-import com.ivkorshak.el_diaries.databinding.FragmentClassesListBinding
+import com.ivkorshak.el_diaries.databinding.FragmentFeedBackBinding
 
-class ClassesListFragment : Fragment() {
-    private var _binding : FragmentClassesListBinding? = null
-    private val binding : FragmentClassesListBinding get() = _binding!!
+class FeedBackFragment : Fragment() {
+    private var _binding : FragmentFeedBackBinding? = null
+    private val binding : FragmentFeedBackBinding get() = _binding!!
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        _binding = FragmentClassesListBinding.inflate(layoutInflater)
+    ): View {
+        _binding = FragmentFeedBackBinding.inflate(layoutInflater)
         return binding.root
     }
 

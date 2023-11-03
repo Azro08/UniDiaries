@@ -1,4 +1,4 @@
-package com.ivkorshak.el_diaries.presentation.admin
+package com.ivkorshak.el_diaries.presentation.admin.add_class
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -6,16 +6,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.ivkorshak.el_diaries.R
-import com.ivkorshak.el_diaries.databinding.FragmentAddAccountBinding
+import com.ivkorshak.el_diaries.databinding.FragmentAddClassBinding
 
-class AddAccountFragment : Fragment() {
-    private var _binding : FragmentAddAccountBinding? = null
-    private val binding get() = _binding!!
+class AddClassFragment : Fragment() {
+    private var _binding : FragmentAddClassBinding? = null
+    private val binding : FragmentAddClassBinding get() = _binding!!
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentAddAccountBinding.inflate(layoutInflater)
+        _binding = FragmentAddClassBinding.inflate(layoutInflater)
         return binding.root
     }
 
@@ -25,6 +25,7 @@ class AddAccountFragment : Fragment() {
 
     override fun onDestroy() {
         super.onDestroy()
+        _binding = null
     }
 
 }

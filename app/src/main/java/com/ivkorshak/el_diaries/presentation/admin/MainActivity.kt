@@ -28,7 +28,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         _binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        supportActionBar?.hide()
         if (!authManager.isLoggedIn()) {
             startActivity(Intent(this, AuthActivity::class.java))
             this.finish()

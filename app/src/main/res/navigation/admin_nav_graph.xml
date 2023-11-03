@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/classesListFragment"
-        android:name="com.ivkorshak.el_diaries.presentation.admin.ClassesListFragment"
+        android:name="com.ivkorshak.el_diaries.presentation.admin.classes_list.ClassesListFragment"
         android:label="fragment_classes_list"
         tools:layout="@layout/fragment_classes_list" >
         <action
@@ -16,12 +16,12 @@
     </fragment>
     <fragment
         android:id="@+id/addAccountFragment"
-        android:name="com.ivkorshak.el_diaries.presentation.admin.AddAccountFragment"
+        android:name="com.ivkorshak.el_diaries.presentation.admin.add_account.AddAccountFragment"
         android:label="fragment_add_account"
         tools:layout="@layout/fragment_add_account" />
     <fragment
         android:id="@+id/accountsListFragment"
-        android:name="com.ivkorshak.el_diaries.presentation.admin.AccountsListFragment"
+        android:name="com.ivkorshak.el_diaries.presentation.admin.accounts_list.AccountsListFragment"
         android:label="fragment_accounts_list"
         tools:layout="@layout/fragment_accounts_list" >
         <action
@@ -30,12 +30,12 @@
     </fragment>
     <fragment
         android:id="@+id/addClassFragment"
-        android:name="com.ivkorshak.el_diaries.presentation.admin.AddClassFragment"
+        android:name="com.ivkorshak.el_diaries.presentation.admin.add_class.AddClassFragment"
         android:label="fragment_add_class"
         tools:layout="@layout/fragment_add_class" />
     <fragment
         android:id="@+id/feedBackFragment"
-        android:name="com.ivkorshak.el_diaries.presentation.admin.FeedBackFragment"
+        android:name="com.ivkorshak.el_diaries.presentation.admin.feedback.FeedBackFragment"
         android:label="fragment_feed_back"
         tools:layout="@layout/fragment_feed_back" />
     <fragment
