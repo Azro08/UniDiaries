@@ -1,7 +1,9 @@
 package com.ivkorshak.el_diaries.presentation.admin
 
 import android.content.Intent
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -28,6 +30,14 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         _binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        supportActionBar?.setBackgroundDrawable(
+            ColorDrawable(
+                resources.getColor(
+                    R.color.blue,
+                    theme
+                )
+            )
+        )
         if (!authManager.isLoggedIn()) {
             startActivity(Intent(this, AuthActivity::class.java))
             this.finish()
@@ -43,9 +53,28 @@ class MainActivity : AppCompatActivity() {
         // menu should be considered as top level destinations.
         val appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.accountsListFragment, R.id.classesListFragment, R.id.feedBackFragment, R.id.profileFragment
+                R.id.accountsListFragment,
+                R.id.classesListFragment,
+                R.id.feedBackFragment,
+                R.id.profileFragment
             )
         )
+
+        val topLevelDestinations = setOf(
+            R.id.accountsListFragment,
+            R.id.classesListFragment,
+            R.id.feedBackFragment,
+            R.id.profileFragment
+        )
+        // Show the bottom navigation view for top-level destinations only
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            if (destination.id in topLevelDestinations) {
+                binding.navView.visibility = View.VISIBLE
+            } else {
+                binding.navView.visibility = View.GONE
+            }
+        }
+
         setupActionBarWithNavController(navController, appBarConfiguration)
         binding.navView.setupWithNavController(navController)
     }

@@ -3,8 +3,9 @@ package com.ivkorshak.el_diaries.presentation.admin.accounts_list
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.FirebaseException
+import com.ivkorshak.el_diaries.data.DeleteUserRepository
 import com.ivkorshak.el_diaries.data.Users
-import com.ivkorshak.el_diaries.data.UsersRepository
+import com.ivkorshak.el_diaries.data.GetUsersRepository
 import com.ivkorshak.el_diaries.util.ScreenState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -14,10 +15,14 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AccountsListViewModel @Inject constructor(
-    private val repository: UsersRepository
+    private val getUsersRepository: GetUsersRepository,
+    private val deleteUserRepository: DeleteUserRepository
 ) : ViewModel() {
     private val _users = MutableStateFlow<ScreenState<List<Users>?>>(ScreenState.Loading())
     val users: MutableStateFlow<ScreenState<List<Users>?>> = _users
+
+    private val _userDeleted = MutableStateFlow<ScreenState<String?>>(ScreenState.Loading())
+    val userDeleted: MutableStateFlow<ScreenState<String?>> = _userDeleted
 
     init {
         getUsers()
@@ -26,7 +31,7 @@ class AccountsListViewModel @Inject constructor(
     private fun getUsers() = viewModelScope.launch {
         _users.value = ScreenState.Loading()
         try {
-            repository.getUsers().let {
+            getUsersRepository.getUsers().let {
                 try {
                     _users.value = ScreenState.Success(it)
                 } catch (e: FirebaseException) {
@@ -39,8 +44,14 @@ class AccountsListViewModel @Inject constructor(
     }
 
     fun deleteUser(uid: String) = viewModelScope.launch {
-        repository.deleteUser(uid)
-        getUsers()
+        deleteUserRepository.deleteUser(uid).let {
+            if (it == "Done") {
+                _userDeleted.value = ScreenState.Success(it)
+                getUsers()
+            } else {
+                _userDeleted.value = ScreenState.Error(it)
+            }
+        }
     }
 
 }
