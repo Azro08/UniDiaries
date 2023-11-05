@@ -13,7 +13,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.google.firebase.auth.FirebaseAuth
-import com.ivkorshak.el_diaries.data.Users
+import com.ivkorshak.el_diaries.data.model.Users
 import com.ivkorshak.el_diaries.databinding.FragmentAddAccountBinding
 import com.ivkorshak.el_diaries.util.ScreenState
 import dagger.hilt.android.AndroidEntryPoint

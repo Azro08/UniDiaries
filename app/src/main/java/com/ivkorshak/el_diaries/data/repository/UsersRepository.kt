@@ -1,16 +1,19 @@
-package com.ivkorshak.el_diaries.util.firestor_service
+package com.ivkorshak.el_diaries.data.repository
 
 import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.ivkorshak.el_diaries.data.Users
+import com.ivkorshak.el_diaries.data.api.UserService
+import com.ivkorshak.el_diaries.data.model.Users
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
-class FirestoreGetDataService @Inject constructor(
+class UsersRepository @Inject constructor(
     private val firestore: FirebaseFirestore,
-    private val firebaseAuth: FirebaseAuth
+    private val firebaseAuth: FirebaseAuth,
+    private val api : UserService
 ) {
+
     suspend fun getUsers(): List<Users> {
         val usersCollection = firestore.collection("users")
         try {
@@ -28,6 +31,30 @@ class FirestoreGetDataService @Inject constructor(
             throw e
         }
     }
+
+    suspend fun deleteUser(userId: String) : String{
+        val userDocument = firestore.collection("users").document(userId)
+        return try {
+            userDocument.delete().await()
+            "Done"
+        } catch (e: Exception) {
+            e.message.toString()
+        }
+    }
+    suspend fun deleteAccount(uid : String) = api.deleteUser(uid)
+
+    suspend fun saveUser(user: Users): String {
+        val usersCollection = firestore.collection("users")
+        return try {
+            // Firestore-specific logic here
+            val userDocRef = usersCollection.document(user.id)
+            userDocRef.set(user).await()
+            "Done"
+        } catch (e: Exception) {
+            e.message.toString()
+        }
+    }
+
     suspend fun getUserRole(): String? {
         val uid = firebaseAuth.currentUser?.uid
         if (uid != null) {
@@ -48,5 +75,4 @@ class FirestoreGetDataService @Inject constructor(
         // Return null if the user is not logged in or any error occurs
         return null
     }
-
 }

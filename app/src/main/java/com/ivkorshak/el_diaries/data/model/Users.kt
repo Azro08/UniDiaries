@@ -1,4 +1,4 @@
-package com.ivkorshak.el_diaries.data
+package com.ivkorshak.el_diaries.data.model
 
 data class Users(
     val id : String = "",

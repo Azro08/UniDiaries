@@ -3,7 +3,7 @@ package com.ivkorshak.el_diaries.presentation.auth
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.FirebaseException
-import com.ivkorshak.el_diaries.data.UserRoleRepository
+import com.ivkorshak.el_diaries.data.repository.UsersRepository
 import com.ivkorshak.el_diaries.util.ScreenState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -13,7 +13,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AuthViewModel @Inject constructor(
-    private val repository: UserRoleRepository
+    private val repository: UsersRepository
 ) : ViewModel() {
 
     private val _userRole = MutableStateFlow<ScreenState<String?>>(ScreenState.Loading())

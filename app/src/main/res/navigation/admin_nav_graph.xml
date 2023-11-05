@@ -18,15 +18,22 @@
         android:id="@+id/addAccountFragment"
         android:name="com.ivkorshak.el_diaries.presentation.admin.add_account.AddAccountFragment"
         android:label="fragment_add_account"
-        tools:layout="@layout/fragment_add_account" />
+        tools:layout="@layout/fragment_add_account" >
+        <action
+            android:id="@+id/nav_add_account_to_accounts_list"
+            app:destination="@id/accountsListFragment" />
+    </fragment>
     <fragment
         android:id="@+id/accountsListFragment"
         android:name="com.ivkorshak.el_diaries.presentation.admin.accounts_list.AccountsListFragment"
         android:label="fragment_accounts_list"
         tools:layout="@layout/fragment_accounts_list" >
         <action
-            android:id="@+id/nav_acounts_to_add_acounts"
+            android:id="@+id/nav_accounts_to_add_accounts"
             app:destination="@id/addAccountFragment" />
+        <action
+            android:id="@+id/action_accountsListFragment_self"
+            app:destination="@id/accountsListFragment" />
     </fragment>
     <fragment
         android:id="@+id/addClassFragment"
