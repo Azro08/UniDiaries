@@ -1,5 +1,6 @@
 package com.ivkorshak.el_diaries.presentation.admin.accounts_list
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.FirebaseException
@@ -10,6 +11,7 @@ import com.ivkorshak.el_diaries.util.ScreenState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
+import retrofit2.HttpException
 import java.net.UnknownHostException
 import javax.inject.Inject
 
@@ -44,13 +46,21 @@ class AccountsListViewModel @Inject constructor(
     }
 
     fun deleteUser(uid: String) = viewModelScope.launch {
-        deleteUserRepository.deleteUser(uid).let {
-            if (it == "Done") {
-                _userDeleted.value = ScreenState.Success(it)
-                getUsers()
-            } else {
-                _userDeleted.value = ScreenState.Error(it)
+        try {
+            deleteUserRepository.deleteAccount(uid).let {
+                if (it == "Done") {
+                    deleteUserRepository.deleteUser(uid).let {response ->
+                        if (response == "Done") _userDeleted.value = ScreenState.Success(response)
+                        else _userDeleted.value = ScreenState.Error(response)
+                    }
+                    getUsers()
+                } else {
+                    _userDeleted.value = ScreenState.Error(it)
+                }
             }
+        } catch (e : HttpException) {
+            Log.d("AccountListViewModel", e.message().toString())
+            _userDeleted.value = ScreenState.Error(e.message())
         }
     }
 

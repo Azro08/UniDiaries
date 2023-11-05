@@ -21,19 +21,14 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.auth.oauth2.GoogleCredentials
-import com.google.firebase.FirebaseApp
-import com.google.firebase.FirebaseOptions
 import com.google.firebase.auth.FirebaseAuth
 import com.ivkorshak.el_diaries.R
 import com.ivkorshak.el_diaries.data.Users
 import com.ivkorshak.el_diaries.databinding.FragmentAccountsListBinding
 import com.ivkorshak.el_diaries.util.ScreenState
+
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-import java.io.FileInputStream
-import java.io.FileNotFoundException
-import java.io.IOException
 import javax.inject.Inject
 
 
