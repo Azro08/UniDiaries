@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.ivkorshak.el_diaries.R
-import com.ivkorshak.el_diaries.data.Users
+import com.ivkorshak.el_diaries.data.model.Users
 import com.ivkorshak.el_diaries.databinding.AccountItemBinding
 
 class AccountsListRvAdapter(

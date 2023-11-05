@@ -1,4 +1,4 @@
-package com.ivkorshak.el_diaries.data
+package com.ivkorshak.el_diaries.data.api
 
 import retrofit2.Call
 import retrofit2.http.DELETE

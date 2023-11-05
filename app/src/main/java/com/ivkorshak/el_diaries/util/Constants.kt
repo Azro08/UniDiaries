@@ -7,4 +7,5 @@ object Constants {
     const val ADMIN = "admin"
     const val TEACHER = "teacher"
     const val STUDENT = "student"
+    const val CLASS_ID = "class_id"
 }

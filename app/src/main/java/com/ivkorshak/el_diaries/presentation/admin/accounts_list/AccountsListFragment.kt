@@ -1,11 +1,8 @@
 package com.ivkorshak.el_diaries.presentation.admin.accounts_list
 
-import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.DialogInterface
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
@@ -23,10 +20,9 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.auth.FirebaseAuth
 import com.ivkorshak.el_diaries.R
-import com.ivkorshak.el_diaries.data.Users
+import com.ivkorshak.el_diaries.data.model.Users
 import com.ivkorshak.el_diaries.databinding.FragmentAccountsListBinding
 import com.ivkorshak.el_diaries.util.ScreenState
-
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -43,9 +39,7 @@ class AccountsListFragment : Fragment() {
     @Inject
     lateinit var firebaseAuth: FirebaseAuth
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         _binding = FragmentAccountsListBinding.inflate(layoutInflater)
         return binding.root
@@ -55,68 +49,48 @@ class AccountsListFragment : Fragment() {
         setMenu()
         viewModelOutputs()
         binding.swipeRefreshLayout.setOnRefreshListener {
-            refreshFragment()
+            viewModel.refresh()
+            binding.swipeRefreshLayout.isRefreshing = false
         }
     }
 
     override fun onResume() {
         super.onResume()
-        refreshFragment()
-        viewModelOutputs()
-    }
-
-    private fun refreshFragment() {
-        binding.loadingGif.visibility = View.VISIBLE
-        binding.rvAccountsList.visibility = View.GONE
-        binding.textViewError.visibility = View.GONE
-        usersList.clear()
-        Handler(Looper.myLooper()!!).postDelayed({
-
-            // This code will run after a 3-second delay
-            viewModelOutputs()
-            binding.swipeRefreshLayout.isRefreshing = false
-            binding.loadingGif.visibility = View.GONE
-            binding.rvAccountsList.visibility = View.VISIBLE
-        }, 3000) // 3000 milliseconds (3 seconds)
+        Log.d("onResumed", "onResume")
+        viewModel.refresh()
     }
 
     private fun viewModelOutputs() {
         lifecycleScope.launch {
-            viewModel.users.collect { accounts ->
-                Log.d("AccountsListFragment", "accounts: ${accounts.data?.size}")
-                processResponse(accounts)
+            viewModel.users.collect { state ->
+                Log.d("AccountsListFragment", "accounts: ${state.data?.size}")
+                when (state) {
+                    is ScreenState.Loading -> {}
+
+                    is ScreenState.Success -> {
+                        binding.loadingGif.visibility = View.GONE
+                        binding.textViewError.visibility = View.GONE
+                        binding.rvAccountsList.visibility = View.VISIBLE
+                        if (!state.data.isNullOrEmpty()) {
+                            displayUsers(state.data)
+                        } else handleError("No Users found")
+                    }
+
+                    is ScreenState.Error -> {
+                        handleError(state.message!!)
+                    }
+                }
             }
         }
     }
 
-    private fun processResponse(state: ScreenState<List<Users>?>) {
-        when (state) {
-            is ScreenState.Loading -> {}
-
-            is ScreenState.Success -> {
-                binding.loadingGif.visibility = View.GONE
-                binding.textViewError.visibility = View.GONE
-                binding.rvAccountsList.visibility = View.VISIBLE
-                if (!state.data.isNullOrEmpty()) {
-                    displayUsers(state.data)
-                } else handleError("No Users found")
-            }
-
-            is ScreenState.Error -> {
-                handleError(state.message!!)
-            }
-        }
-
-    }
-
-    @SuppressLint("NotifyDataSetChanged")
     private fun displayUsers(users: List<Users>) {
+        Log.d("display entered", users.size.toString())
         usersList.clear()
         usersList.addAll(users)
         rvAdapter = AccountsListRvAdapter(usersList) {
             showConfirmationDialog(it)
         }
-        rvAdapter?.notifyDataSetChanged()
         binding.rvAccountsList.setHasFixedSize(true)
         binding.rvAccountsList.layoutManager = LinearLayoutManager(requireContext())
         binding.rvAccountsList.adapter = rvAdapter
@@ -137,32 +111,26 @@ class AccountsListFragment : Fragment() {
     private fun deleteUser(user: Users) {
         lifecycleScope.launch {
             viewModel.deleteUser(user.id)
-            viewModel.userDeleted.collect {
-                deleteUserState(it, user)
+            viewModel.userDeleted.collect { state ->
+                when (state) {
+                    is ScreenState.Loading -> {}
+                    is ScreenState.Success -> {
+                        usersList.remove(user)
+                        Toast.makeText(requireContext(), "User deleted", Toast.LENGTH_SHORT).show()
+                    }
+
+                    is ScreenState.Error -> {
+                        handleError(state.message!!)
+                    }
+                }
             }
         }
     }
-
-    @SuppressLint("NotifyDataSetChanged")
-    private fun deleteUserState(state: ScreenState<String?>, user: Users) {
-        when (state) {
-            is ScreenState.Loading -> {}
-            is ScreenState.Success -> {
-                usersList.remove(user)
-                rvAdapter?.notifyDataSetChanged()
-                Toast.makeText(requireContext(), "User deleted", Toast.LENGTH_SHORT).show()
-            }
-
-            is ScreenState.Error -> {
-                handleError(state.message!!)
-            }
-        }
-    }
-
 
     private fun handleError(errorMsg: String) {
         binding.rvAccountsList.visibility = View.GONE
         binding.loadingGif.visibility = View.GONE
+        binding.textViewError.visibility = View.VISIBLE
         binding.textViewError.text = errorMsg
     }
 
@@ -175,7 +143,7 @@ class AccountsListFragment : Fragment() {
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
                 when (menuItem.itemId) {
                     R.id.itemAdd -> {
-                        findNavController().navigate(R.id.nav_acounts_to_add_acounts)
+                        findNavController().navigate(R.id.nav_accounts_to_add_accounts)
                     }
                 }
                 return true
