@@ -31,6 +31,9 @@
         <action
             android:id="@+id/nav_accounts_to_add_accounts"
             app:destination="@id/addAccountFragment" />
+        <action
+            android:id="@+id/action_accountsListFragment_self"
+            app:destination="@id/accountsListFragment" />
     </fragment>
     <fragment
         android:id="@+id/addClassFragment"
