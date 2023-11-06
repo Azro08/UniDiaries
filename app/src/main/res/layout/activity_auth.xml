@@ -10,12 +10,12 @@
     android:padding="20dp">
 
     <ImageView
-        android:layout_width="300dp"
+        android:layout_width="150dp"
         android:layout_height="150dp"
         android:layout_marginTop="20dp"
         android:layout_marginBottom="10dp"
         android:layout_gravity="center"
-        android:background="@drawable/diary_logo"
+        android:background="@drawable/app_logo"
         android:importantForAccessibility="no" />
 
 

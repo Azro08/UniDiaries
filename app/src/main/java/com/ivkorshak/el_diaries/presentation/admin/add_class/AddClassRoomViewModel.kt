@@ -25,6 +25,9 @@ class AddClassRoomViewModel @Inject constructor(
     private val _classRoomCreated = MutableStateFlow<ScreenState<String?>>(ScreenState.Loading())
     val classRoomCreated: MutableStateFlow<ScreenState<String?>> = _classRoomCreated
 
+    private val _classRoom = MutableStateFlow<ScreenState<ClassRoom?>>(ScreenState.Loading())
+    val classRoom: MutableStateFlow<ScreenState<ClassRoom?>> = _classRoom
+
     private val _students = MutableStateFlow<ScreenState<List<Students>?>>(ScreenState.Loading())
     val students: MutableStateFlow<ScreenState<List<Students>?>> = _students
 
@@ -58,7 +61,7 @@ class AddClassRoomViewModel @Inject constructor(
         }
     }
 
-    private fun getTeachers() = viewModelScope.launch {
+    fun getTeachers() = viewModelScope.launch {
         _teachers.value = ScreenState.Loading()
         try {
             teachersUseCase.invoke().let {
@@ -66,6 +69,18 @@ class AddClassRoomViewModel @Inject constructor(
             }
         } catch (e: HttpException) {
             _teachers.value = ScreenState.Error(e.message.toString())
+        }
+    }
+
+    fun getClassRoom(id : String) = viewModelScope.launch {
+        _classRoom.value = ScreenState.Loading()
+        try {
+            classRoomRepository.getClassRoom(id).let {
+                if (it != null) _classRoom.value = ScreenState.Success(it)
+                else _classRoom.value = ScreenState.Error("No data found")
+            }
+        } catch (e: HttpException) {
+            _classRoom.value = ScreenState.Error(e.message.toString())
         }
     }
 

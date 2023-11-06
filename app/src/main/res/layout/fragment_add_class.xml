@@ -9,11 +9,6 @@
     android:orientation="vertical"
     tools:context=".presentation.admin.add_class.AddClassFragment">
 
-    <ImageView
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_gravity="center"
-        android:background="@drawable/diary_logo" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
@@ -68,6 +63,17 @@
 
             <Spinner
                 android:id="@+id/spinnerTeacher"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/dayofweek"
+                android:textSize="18sp" />
+
+            <Spinner
+                android:id="@+id/spinnerdayOfWeek"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 

@@ -69,4 +69,14 @@ class ClassRoomRepository @Inject constructor(
             e.message.toString()
         }
     }
+
+    suspend fun getClassRoom(classRoomId: String): ClassRoom? {
+        return try {
+            val document = classRoomsCollection.document(classRoomId).get().await()
+            document.toObject(ClassRoom::class.java)
+        } catch (e: Exception) {
+            e.message.toString()
+            null
+        }
+    }
 }

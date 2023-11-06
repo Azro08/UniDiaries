@@ -1,6 +1,7 @@
 package com.ivkorshak.el_diaries.presentation.admin.classes_list
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
@@ -15,13 +16,16 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.ivkorshak.el_diaries.R
 import com.ivkorshak.el_diaries.data.model.ClassRoom
 import com.ivkorshak.el_diaries.databinding.FragmentClassesListBinding
 import com.ivkorshak.el_diaries.util.Constants
 import com.ivkorshak.el_diaries.util.ScreenState
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class ClassesListFragment : Fragment() {
     private var _binding: FragmentClassesListBinding? = null
     private val binding: FragmentClassesListBinding get() = _binding!!
@@ -46,6 +50,9 @@ class ClassesListFragment : Fragment() {
                 when (state) {
                     is ScreenState.Loading -> {}
                     is ScreenState.Success -> {
+                        binding.loadingGif.visibility = View.GONE
+                        binding.rvClassesList.visibility = View.VISIBLE
+                        binding.textViewError.visibility = View.GONE
                         if (state.data.isNullOrEmpty()) {
                             handleError("No classes found")
                         } else displayClassRooms(state.data)
@@ -59,6 +66,9 @@ class ClassesListFragment : Fragment() {
 
     private fun displayClassRooms(data: List<ClassRoom>) {
         rvAdapter = ClassesListRvAdapter(data, { deleteClassRoom(it) }, { navToClassDetails(it) })
+        binding.rvClassesList.setHasFixedSize(true)
+        binding.rvClassesList.layoutManager = LinearLayoutManager(requireContext())
+        binding.rvClassesList.adapter = rvAdapter
     }
 
     private fun navToClassDetails(classRoom: ClassRoom) {
