@@ -19,4 +19,9 @@
     <string name="role">Role</string>
     <string name="todo">TODO</string>
     <string name="save">Save</string>
+    <string name="class_name">Class Name</string>
+    <string name="class_room_no">Class Room No</string>
+    <string name="teacher">Teacher</string>
+    <string name="next">Next</string>
+    <string name="students">Students</string>
 </resources>

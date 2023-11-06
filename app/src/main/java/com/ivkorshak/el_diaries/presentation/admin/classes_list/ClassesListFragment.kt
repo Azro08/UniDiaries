@@ -63,7 +63,6 @@ class ClassesListFragment : Fragment() {
 
     private fun navToClassDetails(classRoom: ClassRoom) {
         findNavController().navigate(
-
             R.id.nav_classes_to_add_class,
             bundleOf(Pair(Constants.CLASS_ID, classRoom.id))
         )
@@ -102,7 +101,7 @@ class ClassesListFragment : Fragment() {
             override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
                 when (menuItem.itemId) {
                     R.id.itemAdd -> {
-
+                        findNavController().navigate(R.id.nav_classes_to_add_class)
                     }
                 }
                 return true
