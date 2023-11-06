@@ -63,6 +63,7 @@ class ClassesListFragment : Fragment() {
 
     private fun navToClassDetails(classRoom: ClassRoom) {
         findNavController().navigate(
+
             R.id.nav_classes_to_add_class,
             bundleOf(Pair(Constants.CLASS_ID, classRoom.id))
         )
