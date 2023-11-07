@@ -25,4 +25,9 @@
     <string name="next">Next</string>
     <string name="students">Students</string>
     <string name="dayofweek">Day Of Week</string>
+    <string name="change_profile_image">Change Profile Image</string>
+    <string name="edit">Edit</string>
+    <string name="logout">logout</string>
+    <string name="old_password">Old Password</string>
+    <string name="new_password">New Password</string>
 </resources>

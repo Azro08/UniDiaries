@@ -51,7 +51,7 @@ class AuthActivity : AppCompatActivity() {
                 getUserRole()
             } else {
                 Toast.makeText(
-                    this@AuthActivity, task.exception?.message.toString(), Toast.LENGTH_LONG
+                    this@AuthActivity, task.exception?.message, Toast.LENGTH_LONG
                 ).show()
             }
 

@@ -9,7 +9,7 @@ class AuthManager(private val context: Context) {
         return authToken.isNotEmpty()
     }
 
-    private fun getUser(): String {
+    fun getUser(): String {
         val sharedPreferences =
             context.getSharedPreferences(Constants.SHARED_PREF_NAME, Context.MODE_PRIVATE)
         return sharedPreferences.getString(Constants.USER_KEY, "") ?: ""
