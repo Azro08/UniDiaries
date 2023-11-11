@@ -1,4 +1,4 @@
-package com.ivkorshak.el_diaries.presentation.common
+package com.ivkorshak.el_diaries.presentation.common.profile
 
 import android.net.Uri
 import android.util.Log

@@ -4,12 +4,13 @@ import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.ivkorshak.el_diaries.data.model.ClassRoom
+import com.ivkorshak.el_diaries.data.model.Students
 import com.ivkorshak.el_diaries.util.AuthManager
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
 class ClassRoomRepository @Inject constructor(
-    private val firestore: FirebaseFirestore,
+    firestore: FirebaseFirestore,
     private val authManager: AuthManager,
     private val firebaseAuth: FirebaseAuth
 ) {
@@ -17,7 +18,7 @@ class ClassRoomRepository @Inject constructor(
     private val classRoomsCollection =
         firestore.collection("classRooms")
 
-    suspend fun getClassRooms(): List<ClassRoom> {
+    suspend fun getClassRooms(weekDay: String): List<ClassRoom> {
         val classRoomsList = mutableListOf<ClassRoom>()
 
         val userRole = authManager.getRole()
@@ -42,7 +43,9 @@ class ClassRoomRepository @Inject constructor(
                 val querySnapshot = query.get().await()
                 for (document in querySnapshot) {
                     val classRoom = document.toObject(ClassRoom::class.java)
-                    classRoomsList.add(classRoom)
+                    if (weekDay == classRoom.dayOfWeek) {
+                        classRoomsList.add(classRoom)
+                    }
                 }
             } catch (e: Exception) {
                 Log.d("getClassesException", e.message.toString())
@@ -78,5 +81,10 @@ class ClassRoomRepository @Inject constructor(
             e.message.toString()
             null
         }
+    }
+
+    suspend fun getAttachedStudents(classRoomId: String): ArrayList<Students> {
+        val classRoom = getClassRoom(classRoomId)
+        return classRoom?.students ?: arrayListOf()
     }
 }

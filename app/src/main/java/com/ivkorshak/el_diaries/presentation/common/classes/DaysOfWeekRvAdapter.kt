@@ -1,0 +1,88 @@
+package com.ivkorshak.el_diaries.presentation.common.classes
+
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.RecyclerView
+import com.ivkorshak.el_diaries.R
+import com.ivkorshak.el_diaries.databinding.DaysItemBinding
+import com.ivkorshak.el_diaries.util.AuthManager
+import javax.inject.Inject
+
+class DaysOfWeekRvAdapter(
+    private val days: List<String>,
+    private var listener: (dayOfWeek: String) -> Unit
+) : RecyclerView.Adapter<DaysOfWeekRvAdapter.DaysOfWeekViewHolder>() {
+
+    private var lastClickedIndex: Int = -1
+
+    class DaysOfWeekViewHolder(
+        private var adapter: DaysOfWeekRvAdapter,
+        private var binding: DaysItemBinding,
+        private val listener: (dayOfWeek: String) -> Unit
+    ) : RecyclerView.ViewHolder(binding.root) {
+        private var day: String? = null
+
+        @Inject
+        lateinit var authManager: AuthManager
+
+        fun bind(curDay: String, position: Int) {
+            binding.textViewDayOfWeek.text = curDay
+            day = curDay
+
+            // Set the background based on `whether` this item was the last clicked one
+            if (adapter.lastClickedIndex == position) {
+                // Set background for the last clicked item
+                binding.root.setBackgroundResource(R.drawable.rounded_blue_background)
+                binding.textViewDayOfWeek.setTextColor(
+                    ContextCompat.getColor(
+                        binding.root.context,
+                        R.color.white
+                    )
+                )
+            } else {
+                // Set the default background for other items
+                binding.root.setBackgroundResource(R.drawable.rounded_white_background)
+                binding.textViewDayOfWeek.setTextColor(
+                    ContextCompat.getColor(
+                        binding.root.context,
+                        R.color.black
+                    )
+                )
+            }
+        }
+
+        init {
+            binding.root.setOnClickListener {
+                listener(day!!)
+                // Update the background for the last clicked item
+                if (adapter.lastClickedIndex != -1) {
+                    adapter.notifyItemChanged(adapter.lastClickedIndex)
+                }
+
+                // Update the background for the currently clicked item
+                adapter.lastClickedIndex = adapterPosition
+                adapter.notifyItemChanged(adapterPosition)
+
+                // Notify the listener
+                adapter.listener(day!!)
+            }
+        }
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DaysOfWeekViewHolder {
+        return DaysOfWeekViewHolder(
+            this,
+            DaysItemBinding.inflate(LayoutInflater.from(parent.context), parent, false),
+            listener
+        )
+    }
+
+    override fun getItemCount(): Int {
+        return days.size
+    }
+
+    override fun onBindViewHolder(holder: DaysOfWeekViewHolder, position: Int) {
+        holder.bind(days[position], position)
+    }
+}

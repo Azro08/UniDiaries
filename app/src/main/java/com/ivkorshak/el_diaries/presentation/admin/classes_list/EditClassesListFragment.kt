@@ -1,7 +1,6 @@
 package com.ivkorshak.el_diaries.presentation.admin.classes_list
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
@@ -19,23 +18,27 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ivkorshak.el_diaries.R
 import com.ivkorshak.el_diaries.data.model.ClassRoom
-import com.ivkorshak.el_diaries.databinding.FragmentClassesListBinding
+import com.ivkorshak.el_diaries.databinding.FragmentEditClassesListBinding
+import com.ivkorshak.el_diaries.util.AuthManager
 import com.ivkorshak.el_diaries.util.Constants
 import com.ivkorshak.el_diaries.util.ScreenState
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @AndroidEntryPoint
-class ClassesListFragment : Fragment() {
-    private var _binding: FragmentClassesListBinding? = null
-    private val binding: FragmentClassesListBinding get() = _binding!!
-    private val viewModel: ClassesListViewModel by viewModels()
+class EditClassesListFragment : Fragment() {
+    private var _binding: FragmentEditClassesListBinding? = null
+    private val binding: FragmentEditClassesListBinding get() = _binding!!
+    private val viewModel: EditClassesListViewModel by viewModels()
     private var rvAdapter: ClassesListRvAdapter? = null
+    @Inject
+    lateinit var authManager: AuthManager
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentClassesListBinding.inflate(layoutInflater)
+        _binding = FragmentEditClassesListBinding.inflate(layoutInflater)
         return binding.root
     }
 
@@ -65,7 +68,11 @@ class ClassesListFragment : Fragment() {
     }
 
     private fun displayClassRooms(data: List<ClassRoom>) {
-        rvAdapter = ClassesListRvAdapter(data, { deleteClassRoom(it) }, { navToClassDetails(it) })
+        rvAdapter = ClassesListRvAdapter(
+            data,
+            authManager.getRole(),
+            { deleteClassRoom(it) },
+            { navToClassDetails(it) })
         binding.rvClassesList.setHasFixedSize(true)
         binding.rvClassesList.layoutManager = LinearLayoutManager(requireContext())
         binding.rvClassesList.adapter = rvAdapter

@@ -12,7 +12,7 @@ import retrofit2.HttpException
 import javax.inject.Inject
 
 @HiltViewModel
-class ClassesListViewModel @Inject constructor(
+class EditClassesListViewModel @Inject constructor(
     private val repository: ClassRoomRepository
 ) : ViewModel() {
 
@@ -32,7 +32,7 @@ class ClassesListViewModel @Inject constructor(
 
     private fun getClassRooms() = viewModelScope.launch {
         try {
-            repository.getClassRooms().let {
+            repository.getClassRooms("Monday").let {
                 if (it.isNotEmpty()) {
                     _classRooms.value = ScreenState.Success(it)
                 } else _classRooms.value = ScreenState.Error("No Classes Available")

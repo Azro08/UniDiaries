@@ -33,10 +33,8 @@ class AddClassFragment : Fragment() {
     private val spinnerTeachers = arrayListOf("")
     private val teachers = arrayListOf<Teacher>()
     private val studentsInClass = arrayListOf<Students>()
-    private var teacherName = ""
+    private var teacherFullName = ""
     private var teacherId = ""
-    private val weekDays =
-        listOf("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday")
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -66,7 +64,7 @@ class AddClassFragment : Fragment() {
         val weekDaysAdapter = ArrayAdapter(
             requireContext(),
             R.layout.support_simple_spinner_dropdown_item,
-            weekDays
+            Constants.weekDays
         )
         binding.spinnerdayOfWeek.adapter = weekDaysAdapter
         binding.spinnerTeacher.adapter = teachersAdapter
@@ -94,8 +92,8 @@ class AddClassFragment : Fragment() {
             id = classId,
             className = className,
             roomNum = classNumber,
-            teacherId = "test",
-            teacherFullName ="",
+            teacherId = teacherId,
+            teacherFullName = teacherFullName,
             students = studentsInClass,
             dayOfWeek = dayOfWeek
         )
@@ -227,7 +225,7 @@ class AddClassFragment : Fragment() {
                             binding.editTextClassName.setText(state.data.className)
                             binding.editTextClassRoomNum.setText(state.data.roomNum.toString())
                             binding.spinnerdayOfWeek.setSelection(
-                                weekDays.indexOf(state.data.dayOfWeek)
+                                Constants.weekDays.indexOf(state.data.dayOfWeek)
                             )
                             studentsInClass.addAll(state.data.students)
                             displayStudent(studentsInClass)
@@ -253,7 +251,7 @@ class AddClassFragment : Fragment() {
         teachers.forEach {
             val tempTeacher = "${it.fullName} ${it.id.substring(0, 5)}"
             if (binding.spinnerTeacher.selectedItem.toString() == tempTeacher) {
-                teacherName = it.fullName
+                teacherFullName = it.fullName
                 teacherId = it.id
             }
         }

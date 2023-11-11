@@ -6,6 +6,32 @@
     android:layout_height="match_parent"
     tools:context=".presentation.teacher.TeachersActivity">
 
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/teachers_nav_view"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="0dp"
+        android:layout_marginEnd="0dp"
+        app:itemIconTint="@drawable/bottom_nav_item_color"
+        app:itemTextColor="@color/black"
+        android:background="@drawable/bottom_nav_bar_background"
+        android:layout_margin="7dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:menu="@menu/teachers_bottom_nav_bar" />
+
+    <fragment
+        android:id="@+id/teachersNavHost"
+        android:name="androidx.navigation.fragment.NavHostFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:defaultNavHost="true"
+        app:layout_constraintBottom_toTopOf="@id/teachers_nav_view"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:navGraph="@navigation/teachers_nav_graph" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

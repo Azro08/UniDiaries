@@ -8,4 +8,7 @@ object Constants {
     const val TEACHER = "teacher"
     const val STUDENT = "student"
     const val CLASS_ID = "class_id"
+
+    val weekDays =
+        listOf("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday")
 }
