@@ -12,20 +12,20 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ivkorshak.el_diaries.R
 import com.ivkorshak.el_diaries.data.model.Students
-import com.ivkorshak.el_diaries.databinding.FragmentClassRoomStudentsBinding
+import com.ivkorshak.el_diaries.databinding.FragmentClassRoomStudentsListBinding
 import com.ivkorshak.el_diaries.util.Constants
 import com.ivkorshak.el_diaries.util.ScreenState
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class ClassRoomStudentsFragment : Fragment() {
+class ClassRoomStudentsListFragment : Fragment() {
 
     companion object {
         private const val ARG_CLASS_ROOM_ID = "arg_class_room_id"
 
-        fun newInstance(classRoomId: String): ClassRoomStudentsFragment {
-            val fragment = ClassRoomStudentsFragment()
+        fun newInstance(classRoomId: String): ClassRoomStudentsListFragment {
+            val fragment = ClassRoomStudentsListFragment()
             val args = Bundle()
             args.putString(ARG_CLASS_ROOM_ID, classRoomId)
             fragment.arguments = args
@@ -33,7 +33,7 @@ class ClassRoomStudentsFragment : Fragment() {
         }
     }
 
-    private var _binding: FragmentClassRoomStudentsBinding? = null
+    private var _binding: FragmentClassRoomStudentsListBinding? = null
     private val binding get() = _binding!!
     private var studentsRvAdapter: StudentsRvAdapter? = null
     private val viewModel: ClassStudentsViewModel by viewModels()
@@ -42,7 +42,7 @@ class ClassRoomStudentsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentClassRoomStudentsBinding.inflate(layoutInflater)
+        _binding = FragmentClassRoomStudentsListBinding.inflate(layoutInflater)
         return binding.root
     }
 
@@ -91,7 +91,10 @@ class ClassRoomStudentsFragment : Fragment() {
     }
 
     private fun navToStudent(id: String) {
-        findNavController().navigate(R.id.nav_student_to_student_details, bundleOf(Pair(Constants.STUDENT_ID, id), Pair(Constants.CLASS_ID, classRoomId)))
+        findNavController().navigate(
+            R.id.nav_student_to_student_details,
+            bundleOf(Pair(Constants.STUDENT_ID, id), Pair(Constants.CLASS_ID, classRoomId))
+        )
     }
 
     override fun onDestroy() {

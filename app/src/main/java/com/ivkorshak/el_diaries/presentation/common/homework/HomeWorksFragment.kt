@@ -1,4 +1,4 @@
-package com.ivkorshak.el_diaries.presentation.teacher.homework
+package com.ivkorshak.el_diaries.presentation.common.homework
 
 import android.app.AlertDialog
 import android.content.DialogInterface
@@ -16,10 +16,12 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ivkorshak.el_diaries.R
 import com.ivkorshak.el_diaries.databinding.FragmentHomeWorksBinding
+import com.ivkorshak.el_diaries.util.AuthManager
 import com.ivkorshak.el_diaries.util.Constants
 import com.ivkorshak.el_diaries.util.ScreenState
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class HomeWorksFragment : Fragment() {
@@ -41,6 +43,7 @@ class HomeWorksFragment : Fragment() {
     private val viewModel: HomeWorksViewModel by viewModels()
     private var homeWorksRvAdapter: HomeWorksRvAdapter? = null
     private lateinit var classRoomId: String
+    @Inject lateinit var authManager: AuthManager
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -52,6 +55,10 @@ class HomeWorksFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         classRoomId = requireArguments().getString(ARG_CLASS_ROOM_ID, "")
         getHomeWorks(classRoomId)
+        if (authManager.getRole() == "student"){
+            binding.textViewAddHomeWork.visibility = View.GONE
+            binding.button.visibility = View.GONE
+        }
         binding.textViewAddHomeWork.setOnClickListener{
             findNavController().navigate(R.id.nav_to_add_homework, bundleOf(Pair(Constants.CLASS_ID, classRoomId)))
         }
@@ -89,7 +96,7 @@ class HomeWorksFragment : Fragment() {
     }
 
     private fun displayHomeWorks(homeWorks: List<String>) {
-        homeWorksRvAdapter = HomeWorksRvAdapter(homeWorks) {
+        homeWorksRvAdapter = HomeWorksRvAdapter(authManager.getRole(),homeWorks) {
             showConfirmationDialog(it)
         }
         binding.rvHomeworks.setHasFixedSize(true)

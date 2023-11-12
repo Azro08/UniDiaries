@@ -1,4 +1,4 @@
-package com.ivkorshak.el_diaries.presentation.teacher.source_list
+package com.ivkorshak.el_diaries.presentation.common.source_list
 
 import android.app.AlertDialog
 import android.content.DialogInterface
@@ -14,9 +14,11 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ivkorshak.el_diaries.databinding.FragmentSourceListBinding
+import com.ivkorshak.el_diaries.util.AuthManager
 import com.ivkorshak.el_diaries.util.ScreenState
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class SourceListFragment : Fragment() {
@@ -38,6 +40,8 @@ class SourceListFragment : Fragment() {
     private lateinit var classRoomId: String
     private var sourceRvAdapter: SourcesListRvAdapter? = null
     private val viewModel: SourceListViewModel by viewModels()
+    @Inject
+    lateinit var authManager : AuthManager
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -48,6 +52,10 @@ class SourceListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         classRoomId = requireArguments().getString(ARG_CLASS_ROOM_ID, "")
+        if (authManager.getRole() == "student"){
+            binding.textViewAddSource.visibility = View.GONE
+            binding.button.visibility = View.GONE
+        }
         binding.textViewAddSource.setOnClickListener {
             addSource()
         }
@@ -98,7 +106,7 @@ class SourceListFragment : Fragment() {
 
     private fun displaySourcesList(data: List<String>) {
         sourceRvAdapter =
-            SourcesListRvAdapter(data, { showConfirmationDialog(it) }, { openLink(it) })
+            SourcesListRvAdapter(authManager.getRole(),data, { showConfirmationDialog(it) }, { openLink(it) })
         binding.rvSources.setHasFixedSize(true)
         binding.rvSources.layoutManager = LinearLayoutManager(requireContext())
         binding.rvSources.adapter = sourceRvAdapter

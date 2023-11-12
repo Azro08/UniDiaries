@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".presentation.teacher.homework.HomeWorksFragment">
+    tools:context=".presentation.common.homework.HomeWorksFragment">
 
     <Button
         android:id="@+id/button"

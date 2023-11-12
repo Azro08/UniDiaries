@@ -37,4 +37,6 @@
     <string name="send">Send</string>
     <string name="add_source">add source</string>
     <string name="url">url:</string>
+    <string name="attendance">Attendance</string>
+    <string name="grades">Grades</string>
 </resources>

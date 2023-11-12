@@ -3,20 +3,23 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/teachers_nav_graph"
-    app:startDestination="@id/teacherClassesFragment">
+    app:startDestination="@id/classesFragment">
 
     <fragment
-        android:id="@+id/teacherProfileFragment"
+        android:id="@+id/commonProfileFragment"
         android:name="com.ivkorshak.el_diaries.presentation.common.profile.ProfileFragment"
         android:label="ProfileFragment" />
     <fragment
-        android:id="@+id/teacherClassesFragment"
+        android:id="@+id/classesFragment"
         android:name="com.ivkorshak.el_diaries.presentation.common.classes.ClassesListFragment"
         android:label="fragment_classes_list"
         tools:layout="@layout/fragment_classes_list" >
         <action
             android:id="@+id/nav_classes_to_class_room"
             app:destination="@id/teachersClassRoomFragment" />
+        <action
+            android:id="@+id/nav_to_student_class_room"
+            app:destination="@id/studentClassRoomFragment" />
     </fragment>
     <fragment
         android:id="@+id/teachersClassRoomFragment"
@@ -37,7 +40,7 @@
         tools:layout="@layout/fragment_student_dialog" />
     <dialog
         android:id="@+id/addHomeworkFragment"
-        android:name="com.ivkorshak.el_diaries.presentation.teacher.homework.add_homework.AddHomeworkFragment"
+        android:name="com.ivkorshak.el_diaries.presentation.teacher.add_homework.AddHomeworkFragment"
         android:label="fragment_add_homework"
         tools:layout="@layout/fragment_add_homework" />
     <fragment
@@ -45,4 +48,9 @@
         android:name="com.ivkorshak.el_diaries.presentation.common.feedback.SendFeedBackFragment"
         android:label="fragment_send_feed_back"
         tools:layout="@layout/fragment_send_feed_back" />
+    <fragment
+        android:id="@+id/studentClassRoomFragment"
+        android:name="com.ivkorshak.el_diaries.presentation.student.StudentClassRoomFragment"
+        android:label="fragment_student_class_room"
+        tools:layout="@layout/fragment_student_class_room" />
 </navigation>

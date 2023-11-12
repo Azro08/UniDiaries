@@ -59,7 +59,8 @@ class ClassesListFragment : Fragment() {
 
     private fun getClasses(weekDay: String) {
         lifecycleScope.launch {
-            viewModel.getClassRooms(weekDay)
+            if (authManager.getRole() == "teacher") viewModel.getClassRooms(weekDay)
+            else viewModel.getStudentsClasses(weekDay)
             viewModel.classRooms.collect { state ->
                 when (state) {
                     is ScreenState.Loading -> {
@@ -92,6 +93,8 @@ class ClassesListFragment : Fragment() {
     private fun navToClassRoom(id: String) {
         if (authManager.getRole() == "teacher") {
             findNavController().navigate(R.id.nav_classes_to_class_room, bundleOf(Pair(Constants.CLASS_ID, id)))
+        } else if (authManager.getRole() == "student") {
+            findNavController().navigate(R.id.nav_to_student_class_room, bundleOf(Pair(Constants.CLASS_ID, id)))
         }
     }
 

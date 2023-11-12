@@ -100,5 +100,36 @@ class StudentsWorkRepository @Inject constructor(
         }
     }
 
+    suspend fun getGradesForStudent(classRoomId: String, studentId: String): List<Grade> {
+        return try {
+            val classRoomRef = classRoomsCollection.document(classRoomId)
+
+            val currentStudents =
+                classRoomRef.get().await().toObject(ClassRoom::class.java)?.students ?: emptyList()
+
+            val student = currentStudents.find { it.id == studentId }
+
+            student?.grades ?: emptyList()
+        } catch (e: Exception) {
+            Log.d("getGradesForStudent", e.message.toString())
+            emptyList()
+        }
+    }
+
+    suspend fun getAttendanceForStudent(classRoomId: String, studentId: String): List<SkippedTime> {
+        return try {
+            val classRoomRef = classRoomsCollection.document(classRoomId)
+
+            val currentStudents =
+                classRoomRef.get().await().toObject(ClassRoom::class.java)?.students ?: emptyList()
+
+            val student = currentStudents.find { it.id == studentId }
+
+            student?.skippedTime ?: emptyList()
+        } catch (e: Exception) {
+            Log.d("getAttendanceForStudent", e.message.toString())
+            emptyList()
+        }
+    }
 
 }

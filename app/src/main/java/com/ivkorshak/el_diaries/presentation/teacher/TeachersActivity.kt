@@ -37,16 +37,16 @@ class TeachersActivity : AppCompatActivity() {
         // menu should be considered as top level destinations.
         val appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.teacherClassesFragment,
+                R.id.classesFragment,
                 R.id.sendFeedBackFragment,
-                R.id.teacherProfileFragment
+                R.id.commonProfileFragment
             )
         )
 
         val topLevelDestinations = setOf(
-            R.id.teacherClassesFragment,
+            R.id.classesFragment,
             R.id.sendFeedBackFragment,
-            R.id.teacherProfileFragment
+            R.id.commonProfileFragment
         )
         // Show the bottom navigation view for top-level destinations only
         navController.addOnDestinationChangedListener { _, destination, _ ->

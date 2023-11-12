@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ivkorshak.el_diaries.data.model.ClassRoom
 import com.ivkorshak.el_diaries.data.repository.ClassRoomRepository
+import com.ivkorshak.el_diaries.domain.GetStudentsClassesUseCase
 import com.ivkorshak.el_diaries.util.ScreenState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -13,8 +14,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ClassesListViewModel @Inject constructor(
-    private val repository: ClassRoomRepository
-) : ViewModel(){
+    private val repository: ClassRoomRepository,
+    private val useCase: GetStudentsClassesUseCase
+) : ViewModel() {
 
     private val _classRooms = MutableStateFlow<ScreenState<List<ClassRoom>?>>(ScreenState.Loading())
     val classRooms: MutableStateFlow<ScreenState<List<ClassRoom>?>> = _classRooms
@@ -23,10 +25,22 @@ class ClassesListViewModel @Inject constructor(
         getClassRooms("Monday")
     }
 
-    fun getClassRooms(weekDay : String) = viewModelScope.launch {
+    fun getClassRooms(weekDay: String) = viewModelScope.launch {
         try {
             repository.getClassRooms(weekDay).let {
                 if (it.isNotEmpty()) {
+                    _classRooms.value = ScreenState.Success(it)
+                } else _classRooms.value = ScreenState.Error("No Classes Available")
+            }
+        } catch (e: HttpException) {
+            _classRooms.value = ScreenState.Error(e.message.toString())
+        }
+    }
+
+    fun getStudentsClasses(weekDay: String) = viewModelScope.launch {
+        try {
+            useCase.invoke(weekDay).let {
+                if (!it.isNullOrEmpty()) {
                     _classRooms.value = ScreenState.Success(it)
                 } else _classRooms.value = ScreenState.Error("No Classes Available")
             }

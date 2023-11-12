@@ -54,7 +54,6 @@ class StudentFragmentDialog : DialogFragment() {
         lifecycleScope.launch {
             val grade: Int = binding.spinnerGrade.selectedItem.toString().toInt()
             val skipped: Int = binding.spinnerSkippedTime.selectedItem.toString().toInt()
-
             if (grade != 0 && skipped != 0) {
                 try {
                     viewModel.setGradeAndSkippedTime(classId, studentId, Grade(classId, arrayListOf(grade)), SkippedTime(classId, arrayListOf(skipped)))

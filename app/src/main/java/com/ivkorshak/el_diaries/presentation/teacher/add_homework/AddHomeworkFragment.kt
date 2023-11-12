@@ -1,4 +1,4 @@
-package com.ivkorshak.el_diaries.presentation.teacher.homework.add_homework
+package com.ivkorshak.el_diaries.presentation.teacher.add_homework
 
 import android.app.AlertDialog
 import android.app.Dialog

@@ -24,6 +24,7 @@ class ClassRoomRepository @Inject constructor(
         val classRoomsList = mutableListOf<ClassRoom>()
 
         val userRole = authManager.getRole()
+        Log.d("getClassRooms", userRole)
         val userId = firebaseAuth.currentUser?.uid
 
         // Define the Firestore query based on user role
@@ -33,16 +34,14 @@ class ClassRoomRepository @Inject constructor(
                 "teacherId",
                 userId
             ) // Load classes assigned to the teacher
-            "student" -> classRoomsCollection.whereArrayContains(
-                "students.id",
-                userId!!
-            ) // Load classes assigned to the student
+            "student" -> classRoomsCollection
+
             else -> null // Handle other roles or errors as needed
         }
-
         if (query != null) {
             try {
                 val querySnapshot = query.get().await()
+                Log.d("snapGetClassRooms", querySnapshot.documents.toString())
                 for (document in querySnapshot) {
                     val classRoom = document.toObject(ClassRoom::class.java)
                     if (weekDay == classRoom.dayOfWeek) {

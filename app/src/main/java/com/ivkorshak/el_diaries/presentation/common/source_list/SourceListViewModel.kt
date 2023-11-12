@@ -1,4 +1,4 @@
-package com.ivkorshak.el_diaries.presentation.teacher.source_list
+package com.ivkorshak.el_diaries.presentation.common.source_list
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

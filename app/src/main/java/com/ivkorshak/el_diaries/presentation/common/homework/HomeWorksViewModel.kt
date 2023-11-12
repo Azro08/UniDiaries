@@ -1,4 +1,4 @@
-package com.ivkorshak.el_diaries.presentation.teacher.homework
+package com.ivkorshak.el_diaries.presentation.common.homework
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
