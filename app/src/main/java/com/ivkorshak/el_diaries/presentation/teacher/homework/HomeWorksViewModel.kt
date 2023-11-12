@@ -2,7 +2,7 @@ package com.ivkorshak.el_diaries.presentation.teacher.homework
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ivkorshak.el_diaries.data.repository.ClassRoomRepository
+import com.ivkorshak.el_diaries.data.repository.HomeWorkRepository
 import com.ivkorshak.el_diaries.util.ScreenState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -11,7 +11,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeWorksViewModel @Inject constructor(
-    private val classRoomRepository: ClassRoomRepository
+    private val repository: HomeWorkRepository
 ) : ViewModel() {
 
     private val _homeWorks = MutableStateFlow<ScreenState<List<String>?>>(ScreenState.Loading())
@@ -26,7 +26,7 @@ class HomeWorksViewModel @Inject constructor(
 
     fun getHomeWorks(classId: String) = viewModelScope.launch {
         try {
-            classRoomRepository.getHomeworks(classId).let {
+            repository.getHomeworks(classId).let {
                 _homeWorks.value = ScreenState.Success(it)
             }
         } catch (e: Exception) {
@@ -36,7 +36,7 @@ class HomeWorksViewModel @Inject constructor(
 
     fun deleteHomework(classRoomId: String, homeworkId: String) = viewModelScope.launch {
         try {
-            classRoomRepository.deleteHomework(classRoomId, homeworkId).let {
+            repository.deleteHomework(classRoomId, homeworkId).let {
                 if (it == "Done") {
                     _homeworkDeleted.value = ScreenState.Success(it)
                     getHomeWorks(classRoomId)

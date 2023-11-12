@@ -35,4 +35,6 @@
     <string name="homework">HomeWork</string>
     <string name="add_homework"><u>add homework</u></string>
     <string name="send">Send</string>
+    <string name="add_source">add source</string>
+    <string name="url">url:</string>
 </resources>

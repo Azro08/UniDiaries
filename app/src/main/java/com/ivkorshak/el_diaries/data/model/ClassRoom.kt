@@ -8,5 +8,6 @@ data class ClassRoom(
     val teacherFullName: String = "",
     val students: ArrayList<Students> = arrayListOf(),
     val dayOfWeek: String = "",
-    val homeWorks : ArrayList<String> = arrayListOf()
+    val homeWorks : ArrayList<String> = arrayListOf(),
+    val sourceList : ArrayList<String> = arrayListOf()
         )

@@ -37,6 +37,7 @@ class TeachersClassRoomFragment : Fragment() {
             tab.text = when (position) {
                 0 -> "Students"
                 1 -> "Homeworks"
+                2 -> "Sources"
                 else -> ""
             }
         }.attach()

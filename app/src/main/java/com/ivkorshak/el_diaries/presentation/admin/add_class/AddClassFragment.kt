@@ -11,6 +11,7 @@ import androidx.appcompat.R
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ivkorshak.el_diaries.data.model.ClassRoom
 import com.ivkorshak.el_diaries.data.model.Students
@@ -107,11 +108,14 @@ class AddClassFragment : Fragment() {
                         Toast.LENGTH_SHORT
                     ).show()
 
-                    is ScreenState.Success -> Toast.makeText(
-                        requireContext(),
-                        "Classroom created successfully",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    is ScreenState.Success -> {
+                        Toast.makeText(
+                            requireContext(),
+                            "Classroom created successfully",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        findNavController().popBackStack()
+                    }
                 }
             }
         }
