@@ -21,7 +21,6 @@ import com.ivkorshak.el_diaries.util.Constants
 import com.ivkorshak.el_diaries.util.ScreenState
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-import kotlin.random.Random
 
 @AndroidEntryPoint
 class AddClassFragment : Fragment() {
@@ -86,7 +85,7 @@ class AddClassFragment : Fragment() {
         setTeacherNameAndId()
         val className = binding.editTextClassName.text.toString()
         val classNumber: Int = binding.editTextClassRoomNum.text.toString().toInt()
-        val classId = generateRandomId()
+        val classId = Constants.generateRandomId()
         val dayOfWeek = binding.spinnerdayOfWeek.selectedItem.toString()
         val classRoom = ClassRoom(
             id = classId,
@@ -118,20 +117,6 @@ class AddClassFragment : Fragment() {
         }
     }
 
-    private fun generateRandomId(): String {
-        val characters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
-        val random =
-            Random(System.currentTimeMillis()) // Seed the random number generator with the current time
-
-        val randomString = StringBuilder(28)
-
-        for (i in 0 until 28) {
-            val randomIndex = random.nextInt(characters.length)
-            randomString.append(characters[randomIndex])
-        }
-
-        return randomString.toString()
-    }
 
     private fun viewModelOutputs() {
         lifecycleScope.launch {

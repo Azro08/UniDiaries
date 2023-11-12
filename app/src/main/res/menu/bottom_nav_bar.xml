@@ -7,7 +7,7 @@
         android:icon="@drawable/home_icon"/>
 
     <item
-        android:id="@+id/teachersFeedbackFragment"
+        android:id="@+id/sendFeedBackFragment"
         android:title="@string/feedback"
         android:icon="@drawable/feedback_icon"/>
 

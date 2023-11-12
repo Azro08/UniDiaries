@@ -14,7 +14,7 @@ class ClassRoomPagerAdapter(fragment: Fragment, private val classRoomID : String
     override fun createFragment(position: Int): Fragment {
         return when (position) {
             0 -> ClassRoomStudentsFragment.newInstance(classRoomID)
-            1 -> HomeWorksFragment()
+            1 -> HomeWorksFragment.newInstance(classRoomID)
             else -> throw IllegalArgumentException("Invalid position")
         }
     }

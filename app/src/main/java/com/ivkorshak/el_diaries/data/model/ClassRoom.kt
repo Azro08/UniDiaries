@@ -7,5 +7,6 @@ data class ClassRoom(
     val teacherId: String = "",
     val teacherFullName: String = "",
     val students: ArrayList<Students> = arrayListOf(),
-    val dayOfWeek: String = ""
+    val dayOfWeek: String = "",
+    val homeWorks : ArrayList<String> = arrayListOf()
         )

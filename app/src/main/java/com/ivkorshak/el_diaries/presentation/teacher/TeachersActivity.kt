@@ -38,14 +38,14 @@ class TeachersActivity : AppCompatActivity() {
         val appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.teacherClassesFragment,
-                R.id.teachersFeedbackFragment,
+                R.id.sendFeedBackFragment,
                 R.id.teacherProfileFragment
             )
         )
 
         val topLevelDestinations = setOf(
             R.id.teacherClassesFragment,
-            R.id.teachersFeedbackFragment,
+            R.id.sendFeedBackFragment,
             R.id.teacherProfileFragment
         )
         // Show the bottom navigation view for top-level destinations only

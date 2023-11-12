@@ -6,11 +6,6 @@
     app:startDestination="@id/teacherClassesFragment">
 
     <fragment
-        android:id="@+id/teachersFeedbackFragment"
-        android:name="com.ivkorshak.el_diaries.presentation.admin.feedback.FeedBackFragment"
-        android:label="fragment_feed_back"
-        tools:layout="@layout/fragment_feed_back" />
-    <fragment
         android:id="@+id/teacherProfileFragment"
         android:name="com.ivkorshak.el_diaries.presentation.common.profile.ProfileFragment"
         android:label="ProfileFragment" />
@@ -31,15 +26,23 @@
         <action
             android:id="@+id/nav_student_to_student_details"
             app:destination="@id/studentFragmentDialog" />
+        <action
+            android:id="@+id/nav_to_add_homework"
+            app:destination="@id/addHomeworkFragment" />
     </fragment>
-    <fragment
-        android:id="@+id/classRoomStudentsFragment"
-        android:name="com.ivkorshak.el_diaries.presentation.teacher.students_list.ClassRoomStudentsFragment"
-        android:label="fragment_class_room_students"
-        tools:layout="@layout/fragment_class_room_students" />
     <dialog
         android:id="@+id/studentFragmentDialog"
         android:name="com.ivkorshak.el_diaries.presentation.teacher.students_list.student.StudentFragmentDialog"
         android:label="fragment_student_dialog"
         tools:layout="@layout/fragment_student_dialog" />
+    <dialog
+        android:id="@+id/addHomeworkFragment"
+        android:name="com.ivkorshak.el_diaries.presentation.teacher.homework.add_homework.AddHomeworkFragment"
+        android:label="fragment_add_homework"
+        tools:layout="@layout/fragment_add_homework" />
+    <fragment
+        android:id="@+id/sendFeedBackFragment"
+        android:name="com.ivkorshak.el_diaries.presentation.common.feedback.SendFeedBackFragment"
+        android:label="fragment_send_feed_back"
+        tools:layout="@layout/fragment_send_feed_back" />
 </navigation>
