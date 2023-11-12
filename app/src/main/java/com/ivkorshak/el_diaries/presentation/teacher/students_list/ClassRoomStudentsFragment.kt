@@ -4,12 +4,16 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.ivkorshak.el_diaries.R
 import com.ivkorshak.el_diaries.data.model.Students
 import com.ivkorshak.el_diaries.databinding.FragmentClassRoomStudentsBinding
+import com.ivkorshak.el_diaries.util.Constants
 import com.ivkorshak.el_diaries.util.ScreenState
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -78,10 +82,16 @@ class ClassRoomStudentsFragment : Fragment() {
 
 
     private fun displayStudent(students: List<Students>) {
-        studentsRvAdapter = StudentsRvAdapter(students) {}
+        studentsRvAdapter = StudentsRvAdapter(students) {
+            navToStudent(it.id)
+        }
         binding.rvStudentsList.setHasFixedSize(true)
         binding.rvStudentsList.layoutManager = LinearLayoutManager(requireContext())
         binding.rvStudentsList.adapter = studentsRvAdapter
+    }
+
+    private fun navToStudent(id: String) {
+        findNavController().navigate(R.id.nav_student_to_student_details, bundleOf(Pair(Constants.STUDENT_ID, id), Pair(Constants.CLASS_ID, classRoomId)))
     }
 
     override fun onDestroy() {

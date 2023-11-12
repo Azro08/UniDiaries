@@ -27,5 +27,19 @@
         android:id="@+id/teachersClassRoomFragment"
         android:name="com.ivkorshak.el_diaries.presentation.teacher.class_room.TeachersClassRoomFragment"
         android:label="fragment_teachers_class_room"
-        tools:layout="@layout/fragment_teachers_class_room" />
+        tools:layout="@layout/fragment_teachers_class_room" >
+        <action
+            android:id="@+id/nav_student_to_student_details"
+            app:destination="@id/studentFragmentDialog" />
+    </fragment>
+    <fragment
+        android:id="@+id/classRoomStudentsFragment"
+        android:name="com.ivkorshak.el_diaries.presentation.teacher.students_list.ClassRoomStudentsFragment"
+        android:label="fragment_class_room_students"
+        tools:layout="@layout/fragment_class_room_students" />
+    <dialog
+        android:id="@+id/studentFragmentDialog"
+        android:name="com.ivkorshak.el_diaries.presentation.teacher.students_list.student.StudentFragmentDialog"
+        android:label="fragment_student_dialog"
+        tools:layout="@layout/fragment_student_dialog" />
 </navigation>
