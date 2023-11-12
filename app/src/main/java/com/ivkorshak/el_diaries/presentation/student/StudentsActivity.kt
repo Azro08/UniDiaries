@@ -1,5 +1,6 @@
 package com.ivkorshak.el_diaries.presentation.student
 
+import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -19,6 +20,14 @@ class StudentsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         _binding = ActivityStudentsBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        supportActionBar?.setBackgroundDrawable(
+            ColorDrawable(
+                resources.getColor(
+                    R.color.blue,
+                    theme
+                )
+            )
+        )
         setBottomNavBar()
     }
 

@@ -8,12 +8,12 @@
     <fragment
         android:id="@+id/commonProfileFragment"
         android:name="com.ivkorshak.el_diaries.presentation.common.profile.ProfileFragment"
-        android:label="ProfileFragment" />
+        android:label="Profile" />
     <fragment
         android:id="@+id/classesFragment"
         android:name="com.ivkorshak.el_diaries.presentation.common.classes.ClassesListFragment"
-        android:label="fragment_classes_list"
-        tools:layout="@layout/fragment_classes_list" >
+        android:label="Classes"
+        tools:layout="@layout/fragment_classes_list">
         <action
             android:id="@+id/nav_classes_to_class_room"
             app:destination="@id/teachersClassRoomFragment" />
@@ -24,8 +24,8 @@
     <fragment
         android:id="@+id/teachersClassRoomFragment"
         android:name="com.ivkorshak.el_diaries.presentation.teacher.class_room.TeachersClassRoomFragment"
-        android:label="fragment_teachers_class_room"
-        tools:layout="@layout/fragment_teachers_class_room" >
+        android:label="ClassRoom"
+        tools:layout="@layout/fragment_teachers_class_room">
         <action
             android:id="@+id/nav_student_to_student_details"
             app:destination="@id/studentFragmentDialog" />
@@ -36,21 +36,19 @@
     <dialog
         android:id="@+id/studentFragmentDialog"
         android:name="com.ivkorshak.el_diaries.presentation.teacher.students_list.student.StudentFragmentDialog"
-        android:label="fragment_student_dialog"
         tools:layout="@layout/fragment_student_dialog" />
     <dialog
         android:id="@+id/addHomeworkFragment"
         android:name="com.ivkorshak.el_diaries.presentation.teacher.add_homework.AddHomeworkFragment"
-        android:label="fragment_add_homework"
         tools:layout="@layout/fragment_add_homework" />
     <fragment
         android:id="@+id/sendFeedBackFragment"
         android:name="com.ivkorshak.el_diaries.presentation.common.feedback.SendFeedBackFragment"
-        android:label="fragment_send_feed_back"
+        android:label="FeedBack"
         tools:layout="@layout/fragment_send_feed_back" />
     <fragment
         android:id="@+id/studentClassRoomFragment"
         android:name="com.ivkorshak.el_diaries.presentation.student.StudentClassRoomFragment"
-        android:label="fragment_student_class_room"
+        android:label="ClassRoom"
         tools:layout="@layout/fragment_student_class_room" />
 </navigation>

@@ -8,8 +8,8 @@
     <fragment
         android:id="@+id/classesListFragment"
         android:name="com.ivkorshak.el_diaries.presentation.admin.classes_list.EditClassesListFragment"
-        android:label="fragment_classes_list"
-        tools:layout="@layout/fragment_edit_classes_list" >
+        android:label="Classes"
+        tools:layout="@layout/fragment_edit_classes_list">
         <action
             android:id="@+id/nav_classes_to_add_class"
             app:destination="@id/addClassFragment" />
@@ -17,8 +17,8 @@
     <fragment
         android:id="@+id/addAccountFragment"
         android:name="com.ivkorshak.el_diaries.presentation.admin.add_account.AddAccountFragment"
-        android:label="fragment_add_account"
-        tools:layout="@layout/fragment_add_account" >
+        android:label="Create Account"
+        tools:layout="@layout/fragment_add_account">
         <action
             android:id="@+id/nav_add_account_to_accounts_list"
             app:destination="@id/accountsListFragment" />
@@ -26,8 +26,8 @@
     <fragment
         android:id="@+id/accountsListFragment"
         android:name="com.ivkorshak.el_diaries.presentation.admin.accounts_list.AccountsListFragment"
-        android:label="fragment_accounts_list"
-        tools:layout="@layout/fragment_accounts_list" >
+        android:label="Accounts"
+        tools:layout="@layout/fragment_accounts_list">
         <action
             android:id="@+id/nav_accounts_to_add_accounts"
             app:destination="@id/addAccountFragment" />
@@ -38,16 +38,16 @@
     <fragment
         android:id="@+id/addClassFragment"
         android:name="com.ivkorshak.el_diaries.presentation.admin.add_class.AddClassFragment"
-        android:label="fragment_add_class"
+        android:label="Create Class"
         tools:layout="@layout/fragment_add_class" />
     <fragment
         android:id="@+id/feedBackFragment"
         android:name="com.ivkorshak.el_diaries.presentation.admin.feedback.FeedBackFragment"
-        android:label="fragment_feed_back"
+        android:label="FeedBack"
         tools:layout="@layout/fragment_feed_back" />
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.ivkorshak.el_diaries.presentation.common.profile.ProfileFragment"
-        android:label="fragment_profile"
+        android:label="Profile"
         tools:layout="@layout/fragment_profile" />
 </navigation>
