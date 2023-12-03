@@ -4,10 +4,9 @@ import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.ivkorshak.el_diaries.data.model.ClassRoom
-import com.ivkorshak.el_diaries.data.model.Grade
-import com.ivkorshak.el_diaries.data.model.SkippedTime
 import com.ivkorshak.el_diaries.data.model.Students
 import com.ivkorshak.el_diaries.util.AuthManager
+import com.ivkorshak.el_diaries.util.Constants
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
@@ -29,12 +28,12 @@ class ClassRoomRepository @Inject constructor(
 
         // Define the Firestore query based on user role
         val query = when (userRole) {
-            "admin" -> classRoomsCollection // Load all classes
-            "teacher" -> classRoomsCollection.whereEqualTo(
+            Constants.ADMIN -> classRoomsCollection // Load all classes
+            Constants.TEACHER -> classRoomsCollection.whereEqualTo(
                 "teacherId",
                 userId
             ) // Load classes assigned to the teacher
-            "student" -> classRoomsCollection
+            Constants.STUDENT -> classRoomsCollection
 
             else -> null // Handle other roles or errors as needed
         }

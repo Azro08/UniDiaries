@@ -43,8 +43,8 @@ class AddAccountFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding.buttonSave.setOnClickListener {
             if (areAllFieldsFilled()) createUser()
-            else Toast.makeText(requireContext(), "Please fill all fields", Toast.LENGTH_SHORT)
-                .show()
+                else Toast.makeText(requireContext(), "Please fill all fields", Toast.LENGTH_SHORT)
+                    .show()
         }
         binding.buttonPickBirthDate.setOnClickListener {
             showDatePickerDialog()

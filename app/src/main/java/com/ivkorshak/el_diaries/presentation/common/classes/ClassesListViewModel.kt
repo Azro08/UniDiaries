@@ -21,8 +21,8 @@ class ClassesListViewModel @Inject constructor(
     private val _classRooms = MutableStateFlow<ScreenState<List<ClassRoom>?>>(ScreenState.Loading())
     val classRooms: MutableStateFlow<ScreenState<List<ClassRoom>?>> = _classRooms
 
-    fun refresh() {
-        getClassRooms("Monday")
+    fun refresh(weekDay: String) {
+        getClassRooms(weekDay)
     }
 
     fun getClassRooms(weekDay: String) = viewModelScope.launch {

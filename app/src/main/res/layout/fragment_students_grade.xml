@@ -10,10 +10,18 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/grades"
-        android:layout_margin="20dp"
-        android:textSize="24sp"
         android:fontFamily="cursive"
-        android:textStyle="bold"/>
+        android:textSize="20sp"
+        android:layout_margin ="10dp"/>
+
+    <TextView
+        android:id="@+id/textViewAverage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="Average: 9.0/10"
+        android:fontFamily="cursive"
+        android:textSize="20sp"
+        android:layout_margin ="10dp"/>
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipeRefreshLayout"
@@ -21,35 +29,22 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp">
 
-        <LinearLayout
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="0dp"
+            android:layout_weight="1">
 
-            <TextView
-                android:id="@+id/textViewGrades"
-                android:layout_marginTop="50dp"
-                android:layout_marginStart="30dp"
-                tools:text = "8/10"
-                android:layout_width="wrap_content"
+            <TableLayout
+                android:id="@+id/tableLayoutGrades"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="20sp"
-                android:layout_margin="20dp"
-                android:textColor="@color/black"/>
+                android:padding="10dp"
+                android:background="@drawable/border_table_layout"/>
 
-            <TextView
-                android:id="@+id/textViewAverage"
-                tools:text = "Total: 20h"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="20sp"
-                android:textColor="@color/black"
-                android:fontFamily="cursive"/>
+        </ScrollView>
 
-        </LinearLayout>
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-
 
     <TextView
         android:id="@+id/tvError"

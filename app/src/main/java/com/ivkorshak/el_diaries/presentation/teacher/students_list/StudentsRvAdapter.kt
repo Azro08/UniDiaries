@@ -1,5 +1,6 @@
 package com.ivkorshak.el_diaries.presentation.teacher.students_list
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -9,7 +10,7 @@ import com.ivkorshak.el_diaries.data.model.Students
 import com.ivkorshak.el_diaries.databinding.ClassStudentItemBinding
 
 class StudentsRvAdapter(
-    private val students: List<Students>,
+    private var students: List<Students>,
     private val listener: (account: Students) -> Unit
 ) : RecyclerView.Adapter<StudentsRvAdapter.StudentViewHolder>() {
 
@@ -30,6 +31,12 @@ class StudentsRvAdapter(
             binding.root.setOnClickListener { listener(account!!) }
         }
 
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun updateFoodList(newStudentsList: List<Students>) {
+        students = newStudentsList.toMutableList()
+        notifyDataSetChanged()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StudentViewHolder {

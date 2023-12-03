@@ -2,17 +2,12 @@ package com.ivkorshak.el_diaries.presentation.admin.classes_list
 
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.os.bundleOf
-import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -32,6 +27,7 @@ class EditClassesListFragment : Fragment() {
     private val binding: FragmentEditClassesListBinding get() = _binding!!
     private val viewModel: EditClassesListViewModel by viewModels()
     private var rvAdapter: ClassesListRvAdapter? = null
+
     @Inject
     lateinit var authManager: AuthManager
     override fun onCreateView(
@@ -43,8 +39,14 @@ class EditClassesListFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        setMenu()
+        binding.textViewAddClass.setOnClickListener {
+            findNavController().navigate(R.id.nav_classes_to_add_class)
+        }
         viewModelOutputs()
+        binding.swipeRefreshLayout.setOnRefreshListener {
+            viewModel.refresh()
+            binding.swipeRefreshLayout.isRefreshing = false
+        }
     }
 
     private fun viewModelOutputs() {
@@ -107,23 +109,6 @@ class EditClassesListFragment : Fragment() {
         binding.loadingGif.visibility = View.GONE
         binding.textViewError.visibility = View.VISIBLE
         binding.textViewError.text = errorMsg
-    }
-
-    private fun setMenu() {
-        requireActivity().addMenuProvider(object : MenuProvider {
-            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
-                menuInflater.inflate(R.menu.add_menu, menu)
-            }
-
-            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-                when (menuItem.itemId) {
-                    R.id.itemAdd -> {
-                        findNavController().navigate(R.id.nav_classes_to_add_class)
-                    }
-                }
-                return true
-            }
-        }, viewLifecycleOwner, Lifecycle.State.RESUMED)
     }
 
     override fun onResume() {

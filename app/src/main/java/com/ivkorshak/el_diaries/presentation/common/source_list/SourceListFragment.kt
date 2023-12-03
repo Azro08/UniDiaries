@@ -15,6 +15,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ivkorshak.el_diaries.databinding.FragmentSourceListBinding
 import com.ivkorshak.el_diaries.util.AuthManager
+import com.ivkorshak.el_diaries.util.Constants
 import com.ivkorshak.el_diaries.util.ScreenState
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -52,7 +53,7 @@ class SourceListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         classRoomId = requireArguments().getString(ARG_CLASS_ROOM_ID, "")
-        if (authManager.getRole() == "student"){
+        if (authManager.getRole() == Constants.STUDENT){
             binding.textViewAddSource.visibility = View.GONE
             binding.button.visibility = View.GONE
         }

@@ -3,8 +3,8 @@ package com.ivkorshak.el_diaries.presentation.teacher.students_list.student
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ivkorshak.el_diaries.data.model.Grade
-import com.ivkorshak.el_diaries.data.model.SkippedTime
+import com.ivkorshak.el_diaries.data.model.Grades
+import com.ivkorshak.el_diaries.data.model.SkippedTimes
 import com.ivkorshak.el_diaries.data.repository.StudentsWorkRepository
 import com.ivkorshak.el_diaries.util.ScreenState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -25,22 +25,22 @@ class EditStudentViewModel @Inject constructor(
     suspend fun setGradeAndSkippedTime(
         classRoomId: String,
         studentId: String,
-        grade: Grade,
-        skippedTime: SkippedTime
+        grades: Grades,
+        skippedTimes: SkippedTimes
     ) {
         try {
-            repository.setGrade(classRoomId, studentId, grade)
-            repository.setSkippedTime(classRoomId, studentId, skippedTime)
+            repository.setGrade(classRoomId, studentId, grades)
+            repository.setSkippedTime(classRoomId, studentId, skippedTimes)
         } catch (e: Exception) {
             Log.d("SetDataError", e.message.toString())
         }
     }
 
 
-    fun setGrade(classRoomId: String, studentId: String, grade: Grade) = viewModelScope.launch {
+    fun setGrade(classRoomId: String, studentId: String, grades: Grades) = viewModelScope.launch {
 
         try {
-            repository.setGrade(classRoomId, studentId, grade).let {
+            repository.setGrade(classRoomId, studentId, grades).let {
                 _gradeIsSet.value = ScreenState.Success(it)
             }
         } catch (e: Exception) {
@@ -48,12 +48,12 @@ class EditStudentViewModel @Inject constructor(
         }
     }
 
-    fun setSkippedTime(classRoomId: String, studentId: String, skippedTime: SkippedTime) =
+    fun setSkippedTime(classRoomId: String, studentId: String, skippedTimes: SkippedTimes) =
         viewModelScope.launch {
 
 
             try {
-                repository.setSkippedTime(classRoomId, studentId, skippedTime).let {
+                repository.setSkippedTime(classRoomId, studentId, skippedTimes).let {
                     _skippedTimeIsSet.value = ScreenState.Success(it)
                 }
             } catch (e: Exception) {

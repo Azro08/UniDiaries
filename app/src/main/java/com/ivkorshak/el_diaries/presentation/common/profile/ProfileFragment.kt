@@ -6,19 +6,14 @@ import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
@@ -61,7 +56,6 @@ class ProfileFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        setMenu()
         if (firebaseAuth.currentUser?.uid.isNullOrEmpty()) {
             Toast.makeText(requireContext(), "You are not authorized", Toast.LENGTH_SHORT).show()
             logout()
@@ -71,6 +65,13 @@ class ProfileFragment : Fragment() {
         binding.profileImage.setOnClickListener {
             setProfileImage()
         }
+        binding.buttonEditProfile.setOnClickListener {
+            editProfile()
+        }
+        binding.buttonLogout.setOnClickListener {
+            logout()
+        }
+        binding.textViewProfileEmail.text = authManager.getUser()
         viewModelOutputs()
     }
 
@@ -123,27 +124,6 @@ class ProfileFragment : Fragment() {
             .into(binding.profileImage)
     }
 
-    private fun setMenu() {
-        requireActivity().addMenuProvider(object : MenuProvider {
-            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
-                menuInflater.inflate(R.menu.profile_menu, menu)
-            }
-
-            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-                when (menuItem.itemId) {
-                    R.id.itemEditProfile -> {
-                        editProfile()
-                    }
-
-                    R.id.itemLogout -> {
-                        logout()
-                    }
-                }
-                return true
-            }
-        }, viewLifecycleOwner, Lifecycle.State.RESUMED)
-    }
-
     private fun areAllFieldsFilled(): Boolean {
         val address = binding.editTextAddress.text.toString()
         val phoneNumber = binding.editTextPhoneNum.text.toString()
@@ -153,9 +133,11 @@ class ProfileFragment : Fragment() {
     }
 
     private fun editProfile() {
+        binding.buttonEditProfile.visibility = View.GONE
         binding.buttonSaveProfile.visibility = View.VISIBLE
-        binding.editTextAddress.isFocusable = true
-        binding.editTextPhoneNum.isFocusable = true
+        binding.buttonSaveProfile.visibility = View.VISIBLE
+        binding.editTextAddress.visibility = View.VISIBLE
+        binding.editTextPhoneNum.visibility = View.VISIBLE
         binding.editTextPassword.visibility = View.VISIBLE
         binding.editTextOldPassword.visibility = View.VISIBLE
         binding.profileImage.isClickable = true
@@ -197,11 +179,11 @@ class ProfileFragment : Fragment() {
         var oldPassword = ""
         var email = ""
         if (password.isEmpty()) password = ""
-        else{
+        else {
             if (binding.editTextOldPassword.text.toString().isEmpty()) {
                 Toast.makeText(requireContext(), "Old password is required", Toast.LENGTH_SHORT)
                     .show()
-            } else{
+            } else {
                 oldPassword = binding.editTextOldPassword.text.toString()
                 email = authManager.getUser()
             }
@@ -221,13 +203,25 @@ class ProfileFragment : Fragment() {
         }
 
         lifecycleScope.launch {
-            viewModel.saveUser(firebaseAuth.currentUser?.uid!!, updatedFields, password, oldPassword, email)
+            viewModel.saveUser(
+                firebaseAuth.currentUser?.uid!!,
+                updatedFields,
+                password,
+                oldPassword,
+                email
+            )
             viewModel.userSaved.collect { state ->
                 when (state) {
                     is ScreenState.Loading -> {}
                     is ScreenState.Success -> {
                         Toast.makeText(requireContext(), "Profile updated", Toast.LENGTH_SHORT)
                             .show()
+                        binding.buttonSaveProfile.visibility = View.GONE
+                        binding.editTextPassword.visibility = View.GONE
+                        binding.editTextOldPassword.visibility = View.GONE
+                        binding.editTextAddress.visibility = View.GONE
+                        binding.editTextPhoneNum.visibility = View.GONE
+                        binding.buttonEditProfile.visibility = View.VISIBLE
                     }
 
                     is ScreenState.Error -> {

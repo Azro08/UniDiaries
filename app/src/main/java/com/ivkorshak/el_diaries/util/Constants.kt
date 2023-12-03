@@ -9,13 +9,14 @@ object Constants {
     const val SHARED_PREF_NAME = "user_pref"
     const val USER_KEY = "user_key"
     const val ROLE_KEY = "role_key"
-    const val ADMIN = "admin"
-    const val TEACHER = "teacher"
-    const val STUDENT = "student"
+    const val ADMIN = "админ"
+    const val TEACHER = "преподаватель"
+    const val STUDENT = "студент"
     const val CLASS_ID = "class_id"
     const val STUDENT_ID = "studentId"
+    const val LANGUAGE_KEY = "language_key"
     val weekDays =
-        listOf("Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday")
+        listOf("ПН", "ВТ", "СР", "ЧТ", "ПТ", "СБ", "ВС")
     val grades = listOf(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
     val skippedTime = listOf(0, 1, 2, 3, 4)
 

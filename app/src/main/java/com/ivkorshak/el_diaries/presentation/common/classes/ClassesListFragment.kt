@@ -31,6 +31,7 @@ class ClassesListFragment : Fragment() {
     private val viewModel: ClassesListViewModel by viewModels()
     @Inject
     lateinit var authManager: AuthManager
+    private var weekDay = "ПН"
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -41,15 +42,17 @@ class ClassesListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         setWeeksDays()
+        getClasses()
         binding.swipeRefreshLayout.setOnRefreshListener {
-            viewModel.refresh()
+            viewModel.refresh(weekDay)
             binding.swipeRefreshLayout.isRefreshing = false
         }
     }
 
     private fun setWeeksDays() {
         daysListRvAdapter = DaysOfWeekRvAdapter(Constants.weekDays) {
-            getClasses(it)
+            weekDay = it
+            viewModel.getClassRooms(it)
         }
         binding.rvDaysList.setHasFixedSize(true)
         binding.rvDaysList.layoutManager =
@@ -57,9 +60,9 @@ class ClassesListFragment : Fragment() {
         binding.rvDaysList.adapter = daysListRvAdapter
     }
 
-    private fun getClasses(weekDay: String) {
+    private fun getClasses() {
         lifecycleScope.launch {
-            if (authManager.getRole() == "teacher") viewModel.getClassRooms(weekDay)
+            if (authManager.getRole() == Constants.TEACHER) viewModel.getClassRooms(weekDay)
             else viewModel.getStudentsClasses(weekDay)
             viewModel.classRooms.collect { state ->
                 when (state) {
@@ -91,14 +94,15 @@ class ClassesListFragment : Fragment() {
     }
 
     private fun navToClassRoom(id: String) {
-        if (authManager.getRole() == "teacher") {
+        if (authManager.getRole() == Constants.TEACHER) {
             findNavController().navigate(R.id.nav_classes_to_class_room, bundleOf(Pair(Constants.CLASS_ID, id)))
-        } else if (authManager.getRole() == "student") {
+        } else if (authManager.getRole() == Constants.STUDENT) {
             findNavController().navigate(R.id.nav_to_student_class_room, bundleOf(Pair(Constants.CLASS_ID, id)))
         }
     }
 
     private fun handleError(errorMsg: String) {
+        binding.imageViewDiaryImg.visibility = View.VISIBLE
         binding.rvClassesList.visibility = View.GONE
         binding.loadingGif.visibility = View.GONE
         binding.textViewError.visibility = View.VISIBLE

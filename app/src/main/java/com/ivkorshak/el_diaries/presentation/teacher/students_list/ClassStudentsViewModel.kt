@@ -18,6 +18,19 @@ class ClassStudentsViewModel @Inject constructor(
     private val _students = MutableStateFlow<ScreenState<List<Students>?>>(ScreenState.Loading())
     val students : MutableStateFlow<ScreenState<List<Students>?>>  = _students
 
+
+    fun filterFoodList(query: String): List<Students> {
+        return when (val currentState = _students.value) {
+            is ScreenState.Success -> {
+                currentState.data?.filter { student ->
+                    student.fullName.contains(query, ignoreCase = true)
+                } ?: emptyList()
+            }
+
+            else -> emptyList()
+        }
+    }
+
     fun getAttachedStudents(classId: String) = viewModelScope.launch {
         try {
             classRoomRepository.getAttachedStudents(classId).let {

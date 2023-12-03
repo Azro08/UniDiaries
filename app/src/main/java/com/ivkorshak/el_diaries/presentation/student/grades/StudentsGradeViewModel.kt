@@ -2,7 +2,7 @@ package com.ivkorshak.el_diaries.presentation.student.grades
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ivkorshak.el_diaries.data.model.Grade
+import com.ivkorshak.el_diaries.data.model.Grades
 import com.ivkorshak.el_diaries.data.repository.StudentsWorkRepository
 import com.ivkorshak.el_diaries.util.ScreenState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -15,7 +15,7 @@ class StudentsGradeViewModel @Inject constructor(
     private val repository: StudentsWorkRepository
 ) : ViewModel(){
 
-    private val _studentGrades = MutableStateFlow<ScreenState<List<Grade>?>>(ScreenState.Loading())
+    private val _studentGrades = MutableStateFlow<ScreenState<List<Grades>?>>(ScreenState.Loading())
     val studentGrades = _studentGrades
 
     fun refresh(classRoomId : String, studentId : String) {

@@ -4,15 +4,17 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TableRow
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.google.firebase.auth.FirebaseAuth
-import com.ivkorshak.el_diaries.data.model.Grade
+import com.ivkorshak.el_diaries.R
+import com.ivkorshak.el_diaries.data.model.Grades
 import com.ivkorshak.el_diaries.databinding.FragmentStudentsGradeBinding
 import com.ivkorshak.el_diaries.util.ScreenState
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -36,7 +38,8 @@ class StudentsGradeFragment : Fragment() {
     private val binding get() = _binding!!
     private val viewModel: StudentsGradeViewModel by viewModels()
     lateinit var classRoomId: String
-    @Inject lateinit var firebaseAuth : FirebaseAuth
+    @Inject
+    lateinit var firebaseAuth: FirebaseAuth
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -59,7 +62,7 @@ class StudentsGradeFragment : Fragment() {
     private fun getGrades(uid: String) {
         lifecycleScope.launch {
             viewModel.getStudentGrades(classRoomId, uid)
-            viewModel.studentGrades.collect{ state->
+            viewModel.studentGrades.collect { state ->
                 when (state) {
                     is ScreenState.Loading -> {}
                     is ScreenState.Success -> {
@@ -79,18 +82,39 @@ class StudentsGradeFragment : Fragment() {
     }
 
     private fun handleError(msg: String) {
-        binding.textViewGrades.visibility = View.GONE
+        binding.tableLayoutGrades.visibility = View.GONE
         binding.tvError.visibility = View.VISIBLE
         binding.tvError.text = msg
     }
 
-    private fun displayData(grades: List<Grade>) {
+    private fun displayData(grades: List<Grades>) {
         binding.tvError.visibility = View.GONE
-        binding.textViewGrades.visibility = View.VISIBLE
-        val average = "Average: ${grades[0].grades.average()}"
-        binding.textViewAverage.text = average
-        binding.textViewGrades.text = grades.toString()
+        binding.tableLayoutGrades.visibility = View.VISIBLE
+        val groupedGrades = grades.flatMap { it.grades }
+            .groupBy { it.date }
+            .mapValues { (_, value) ->
+                value.joinToString(", ") { "${it.grade}/10" }
+            }
+
+        // Iterate through grouped grades and populate the table
+        for ((date, gradesText) in groupedGrades) {
+            val row = TableRow(requireContext())
+            val averageGrade = grades.map { it.grades.map {grade->
+                grade.grade
+            }.average() }
+            val averageGradeText = "${getString(R.string.average)}: $averageGrade/10"
+            val dateTextView = TextView(requireContext())
+            val gradesFormatted = "$date $gradesText"
+            binding.textViewAverage.text = averageGradeText
+            dateTextView.text = gradesFormatted
+            dateTextView.textSize = 20f
+            dateTextView.setPadding(10, 10, 10, 10)
+            row.addView(dateTextView)
+
+            binding.tableLayoutGrades.addView(row)
+        }
     }
+
 
     override fun onDestroy() {
         super.onDestroy()

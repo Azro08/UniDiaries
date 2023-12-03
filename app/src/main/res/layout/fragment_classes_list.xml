@@ -9,6 +9,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvDaysList"
         android:layout_width="match_parent"
+        android:background="@color/white"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -32,12 +33,14 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:fontFamily="cursive"
-        android:textSize="28sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:textSize="30sp"
+        android:textColor="@color/black"
+        android:textStyle="bold"
         android:visibility="gone"
-        app:layout_constraintTop_toTopOf="@+id/swipeRefreshLayout"
+        app:layout_constraintBottom_toBottomOf="@+id/imageViewDiaryImg"
+        app:layout_constraintEnd_toEndOf="@+id/imageViewDiaryImg"
+        app:layout_constraintStart_toStartOf="@+id/imageViewDiaryImg"
+        app:layout_constraintTop_toTopOf="@+id/imageViewDiaryImg"
         tools:text="Error" />
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -59,5 +62,16 @@
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
+    <ImageView
+        android:id="@+id/imageViewDiaryImg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:alpha="0.2"
+        android:visibility="gone"
+        android:background="@drawable/diary_img"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

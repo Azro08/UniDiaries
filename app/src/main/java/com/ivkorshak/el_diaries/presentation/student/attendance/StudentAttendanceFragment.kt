@@ -4,11 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TableRow
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.google.firebase.auth.FirebaseAuth
-import com.ivkorshak.el_diaries.data.model.SkippedTime
+import com.ivkorshak.el_diaries.R
+import com.ivkorshak.el_diaries.data.model.SkippedTimes
 import com.ivkorshak.el_diaries.databinding.FragmentStudentAttendanceBinding
 import com.ivkorshak.el_diaries.util.ScreenState
 import dagger.hilt.android.AndroidEntryPoint
@@ -35,6 +38,7 @@ class StudentAttendanceFragment : Fragment() {
     private val binding get() = _binding!!
     lateinit var classRoomId: String
     private val viewModel: StudentAttendanceViewModel by viewModels()
+
     @Inject
     lateinit var firebaseAuth: FirebaseAuth
     override fun onCreateView(
@@ -79,19 +83,42 @@ class StudentAttendanceFragment : Fragment() {
     }
 
     private fun handleError(msg: String) {
-        binding.textViewAttendance.visibility = View.GONE
+        binding.textViewTotalSkipped.visibility = View.GONE
         binding.tvError.visibility = View.VISIBLE
         binding.tvError.text = msg
     }
 
-    private fun displayData(data: List<SkippedTime>) {
+    private fun displayData(skippedTimes: List<SkippedTimes>) {
         binding.tvError.visibility = View.GONE
-        binding.textViewAttendance.visibility = View.VISIBLE
-        binding.textViewAttendance.text = data.toString()
-        val totalSkipped = "Total skipped classes: ${data[0].skipped.sum()}"
-        binding.textViewTotalSkipped.text = totalSkipped
+        binding.tableLayoutAttendance.visibility = View.VISIBLE
+        val groupedSkippedTimes = skippedTimes.flatMap { it.skipped }
+            .groupBy { it.date }
+            .mapValues { (_, value) ->
+                value.joinToString(", ") { "${it.skippedTime}${getString(R.string.h)}" }
+            }
 
+        // Iterate through grouped grades and populate the table
+        for ((date, gradesText) in groupedSkippedTimes) {
+            val row = TableRow(requireContext())
+            val averageGrade = skippedTimes.map {
+                it.skipped.map { time ->
+                    time.skippedTime
+                }.sum()
+            }
+            val totalSkippedTextView =
+                "${getString(R.string.total)}: $averageGrade${getString(R.string.h)}"
+            val dateTextView = TextView(requireContext())
+            val skippedTimeFormatted = "$date $gradesText"
+            binding.textViewTotalSkipped.text = totalSkippedTextView
+            dateTextView.text = skippedTimeFormatted
+            dateTextView.textSize = 20f
+            dateTextView.setPadding(10, 10, 10, 10)
+            row.addView(dateTextView)
+
+            binding.tableLayoutAttendance.addView(row)
+        }
     }
+
 
     override fun onDestroy() {
         super.onDestroy()

@@ -1,9 +1,8 @@
 package com.ivkorshak.el_diaries.presentation.teacher
 
-import android.graphics.drawable.ColorDrawable
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
@@ -14,20 +13,13 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class TeachersActivity : AppCompatActivity() {
-    private var _binding :  ActivityTeachersBinding? = null
+    private var _binding: ActivityTeachersBinding? = null
     private val binding get() = _binding!!
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         _binding = ActivityTeachersBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        supportActionBar?.setBackgroundDrawable(
-            ColorDrawable(
-                resources.getColor(
-                    R.color.blue,
-                    theme
-                )
-            )
-        )
+        supportActionBar?.hide()
         setBottomNavBar()
     }
 
@@ -38,14 +30,14 @@ class TeachersActivity : AppCompatActivity() {
         val appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.classesFragment,
-                R.id.sendFeedBackFragment,
+                R.id.settingsFragment,
                 R.id.commonProfileFragment
             )
         )
 
         val topLevelDestinations = setOf(
             R.id.classesFragment,
-            R.id.sendFeedBackFragment,
+            R.id.settingsFragment,
             R.id.commonProfileFragment
         )
         // Show the bottom navigation view for top-level destinations only

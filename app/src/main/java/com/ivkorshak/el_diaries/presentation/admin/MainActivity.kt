@@ -1,7 +1,8 @@
 package com.ivkorshak.el_diaries.presentation.admin
 
+import android.content.Context
+import android.content.ContextWrapper
 import android.content.Intent
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -16,6 +17,7 @@ import com.ivkorshak.el_diaries.presentation.student.StudentsActivity
 import com.ivkorshak.el_diaries.presentation.teacher.TeachersActivity
 import com.ivkorshak.el_diaries.util.AuthManager
 import com.ivkorshak.el_diaries.util.Constants
+import com.ivkorshak.el_diaries.util.setLocale
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -26,18 +28,18 @@ class MainActivity : AppCompatActivity() {
 
     @Inject
     lateinit var authManager: AuthManager
+
+    override fun attachBaseContext(newBase: Context?) {
+        val lang = newBase?.getSharedPreferences(Constants.SHARED_PREF_NAME, Context.MODE_PRIVATE)
+            ?.getString(Constants.LANGUAGE_KEY, "en")!!.toString()
+        super.attachBaseContext(ContextWrapper(newBase.setLocale(lang)))
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         _binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        supportActionBar?.setBackgroundDrawable(
-            ColorDrawable(
-                resources.getColor(
-                    R.color.blue,
-                    theme
-                )
-            )
-        )
+        supportActionBar?.hide()
         if (!authManager.isLoggedIn()) {
             startActivity(Intent(this, AuthActivity::class.java))
             this.finish()
@@ -55,16 +57,16 @@ class MainActivity : AppCompatActivity() {
             setOf(
                 R.id.accountsListFragment,
                 R.id.classesListFragment,
-                R.id.feedBackFragment,
-                R.id.profileFragment
+                R.id.profileFragment,
+                R.id.settingsFragment,
             )
         )
 
         val topLevelDestinations = setOf(
             R.id.accountsListFragment,
             R.id.classesListFragment,
-            R.id.feedBackFragment,
-            R.id.profileFragment
+            R.id.profileFragment,
+            R.id.settingsFragment,
         )
         // Show the bottom navigation view for top-level destinations only
         navController.addOnDestinationChangedListener { _, destination, _ ->

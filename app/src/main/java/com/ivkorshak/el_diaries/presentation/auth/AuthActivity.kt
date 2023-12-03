@@ -8,6 +8,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.google.firebase.auth.FirebaseAuth
+import com.ivkorshak.el_diaries.R
 import com.ivkorshak.el_diaries.databinding.ActivityAuthBinding
 import com.ivkorshak.el_diaries.presentation.admin.MainActivity
 import com.ivkorshak.el_diaries.presentation.student.StudentsActivity
@@ -36,7 +37,8 @@ class AuthActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.buttonLogin.setOnClickListener {
-            login()
+            if (binding.editTextLoginEmail.text.isNotEmpty() && binding.editTextLoginPassword.text.isNotEmpty())login()
+            else Toast.makeText(this, getString(R.string.fillup_fields), Toast.LENGTH_SHORT).show()
         }
 
     }
@@ -82,19 +84,19 @@ class AuthActivity : AppCompatActivity() {
         Log.d("AuthActivity", "role: $role")
         when (role) {
             Constants.ADMIN -> {
-                authManager.saveRole("admin")
+                authManager.saveRole(Constants.ADMIN)
                 startActivity(Intent(this, MainActivity::class.java))
                 this.finish()
             }
 
             Constants.TEACHER -> {
-                authManager.saveRole("teacher")
+                authManager.saveRole(Constants.TEACHER)
                 startActivity(Intent(this, TeachersActivity::class.java))
                 this.finish()
             }
 
             Constants.STUDENT -> {
-                authManager.saveRole("student")
+                authManager.saveRole(Constants.STUDENT)
                 startActivity(Intent(this, StudentsActivity::class.java))
                 this.finish()
             }

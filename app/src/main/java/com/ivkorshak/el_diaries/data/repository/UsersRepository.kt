@@ -7,6 +7,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.ivkorshak.el_diaries.data.api.UserService
 import com.ivkorshak.el_diaries.data.model.Users
+import com.ivkorshak.el_diaries.util.Constants
 import kotlinx.coroutines.tasks.await
 import java.util.UUID
 import javax.inject.Inject
@@ -25,7 +26,7 @@ class UsersRepository @Inject constructor(
             val usersList = mutableListOf<Users>()
             for (document in querySnapshot) {
                 val user = document.toObject(Users::class.java)
-                if (user.role != "admin") {
+                if (user.role != Constants.ADMIN) {
                     usersList.add(user)
                 }
             }

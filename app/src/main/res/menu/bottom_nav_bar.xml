@@ -7,9 +7,9 @@
         android:icon="@drawable/home_icon"/>
 
     <item
-        android:id="@+id/sendFeedBackFragment"
-        android:title="@string/feedback"
-        android:icon="@drawable/feedback_icon"/>
+        android:id="@+id/settingsFragment"
+        android:title="@string/settings"
+        android:icon="@drawable/settings_icon"/>
 
     <item
         android:id="@+id/commonProfileFragment"

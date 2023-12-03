@@ -2,6 +2,7 @@ package com.ivkorshak.el_diaries.domain
 
 import com.ivkorshak.el_diaries.data.model.Teacher
 import com.ivkorshak.el_diaries.data.repository.UsersRepository
+import com.ivkorshak.el_diaries.util.Constants
 import com.ivkorshak.el_diaries.util.ScreenState
 import javax.inject.Inject
 
@@ -13,7 +14,7 @@ class GetTeachersUseCase @Inject constructor(
         val teachers = arrayListOf<Teacher>()
         return try {
             usersRepository.getUsers().forEach { user ->
-                if (user.role == "teacher") {
+                if (user.role == Constants.TEACHER) {
                     val fullName = "${user.firstName} ${user.lastName}"
                     val teacher = Teacher(user.id, fullName, user.imageUrl)
                     teachers.add(teacher)

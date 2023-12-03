@@ -55,7 +55,7 @@ class HomeWorksFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         classRoomId = requireArguments().getString(ARG_CLASS_ROOM_ID, "")
         getHomeWorks(classRoomId)
-        if (authManager.getRole() == "student"){
+        if (authManager.getRole() == Constants.STUDENT){
             binding.textViewAddHomeWork.visibility = View.GONE
             binding.button.visibility = View.GONE
         }

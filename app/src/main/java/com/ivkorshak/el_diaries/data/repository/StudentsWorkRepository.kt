@@ -3,8 +3,8 @@ package com.ivkorshak.el_diaries.data.repository
 import android.util.Log
 import com.google.firebase.firestore.FirebaseFirestore
 import com.ivkorshak.el_diaries.data.model.ClassRoom
-import com.ivkorshak.el_diaries.data.model.Grade
-import com.ivkorshak.el_diaries.data.model.SkippedTime
+import com.ivkorshak.el_diaries.data.model.Grades
+import com.ivkorshak.el_diaries.data.model.SkippedTimes
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
@@ -15,7 +15,7 @@ class StudentsWorkRepository @Inject constructor(
     private val classRoomsCollection =
         firestore.collection("classRooms")
 
-    suspend fun setGrade(classRoomId: String, studentId: String, newGrade: Grade): String {
+    suspend fun setGrade(classRoomId: String, studentId: String, newGrades: Grades): String {
         return try {
             val classRoomRef = classRoomsCollection.document(classRoomId)
 
@@ -30,10 +30,10 @@ class StudentsWorkRepository @Inject constructor(
                     val updatedGrades = student.grades.toMutableList()
                     val existingGrade = updatedGrades.find { it.classRoomId == classRoomId }
                     if (existingGrade != null) {
-                        existingGrade.grades.addAll(newGrade.grades)
+                        existingGrade.grades.addAll(newGrades.grades)
                     } else {
                         // If the classRoomId doesn't exist, add a new entry
-                        updatedGrades.add(newGrade)
+                        updatedGrades.add(newGrades)
                     }
 
                     // Update the student with the modified grades list
@@ -58,7 +58,7 @@ class StudentsWorkRepository @Inject constructor(
     suspend fun setSkippedTime(
         classRoomId: String,
         studentId: String,
-        newSkippedTime: SkippedTime
+        newSkippedTimes: SkippedTimes
     ): String {
         return try {
             val classRoomRef = classRoomsCollection.document(classRoomId)
@@ -71,18 +71,18 @@ class StudentsWorkRepository @Inject constructor(
             val updatedStudents = currentStudents.map { student ->
                 if (student.id == studentId) {
                     // Check if the classRoomId already exists in skippedTime, if yes, update the list
-                    val updatedSkippedTime = student.skippedTime.toMutableList()
+                    val updatedSkippedTime = student.skippedTimes.toMutableList()
                     val existingSkippedTime =
                         updatedSkippedTime.find { it.classRoomId == classRoomId }
                     if (existingSkippedTime != null) {
-                        existingSkippedTime.skipped.addAll(newSkippedTime.skipped)
+                        existingSkippedTime.skipped.addAll(newSkippedTimes.skipped)
                     } else {
                         // If the classRoomId doesn't exist, add a new entry
-                        updatedSkippedTime.add(newSkippedTime)
+                        updatedSkippedTime.add(newSkippedTimes)
                     }
 
                     // Update the student with the modified skippedTime list
-                    student.copy(skippedTime = updatedSkippedTime)
+                    student.copy(skippedTimes = updatedSkippedTime)
                 } else {
                     // For other students, return unchanged
                     student
@@ -100,7 +100,7 @@ class StudentsWorkRepository @Inject constructor(
         }
     }
 
-    suspend fun getGradesForStudent(classRoomId: String, studentId: String): List<Grade> {
+    suspend fun getGradesForStudent(classRoomId: String, studentId: String): List<Grades> {
         return try {
             val classRoomRef = classRoomsCollection.document(classRoomId)
 
@@ -116,7 +116,7 @@ class StudentsWorkRepository @Inject constructor(
         }
     }
 
-    suspend fun getAttendanceForStudent(classRoomId: String, studentId: String): List<SkippedTime> {
+    suspend fun getAttendanceForStudent(classRoomId: String, studentId: String): List<SkippedTimes> {
         return try {
             val classRoomRef = classRoomsCollection.document(classRoomId)
 
@@ -125,7 +125,7 @@ class StudentsWorkRepository @Inject constructor(
 
             val student = currentStudents.find { it.id == studentId }
 
-            student?.skippedTime ?: emptyList()
+            student?.skippedTimes ?: emptyList()
         } catch (e: Exception) {
             Log.d("getAttendanceForStudent", e.message.toString())
             emptyList()

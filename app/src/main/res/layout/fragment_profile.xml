@@ -3,10 +3,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:padding="16dp"
     android:background="@drawable/gradient_background"
-    android:gravity="center">
+    android:gravity="center"
+    tools:context="com.ivkorshak.el_diaries.presentation.common.profile.ProfileFragment">
 
 
 
@@ -26,6 +28,13 @@
             android:orientation="vertical"
             android:padding="16dp">
 
+            <ImageButton
+                android:id="@+id/buttonLogout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/logout_icon"
+                android:layout_gravity="end"/>
+
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/profile_image"
                 android:layout_width="100dp"
@@ -38,17 +47,27 @@
                 app:civ_border_width="2dp"
                 app:civ_border_color="#FF000000"/>
 
+            <TextView
+                android:id="@+id/textViewProfileEmail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                tools:text = "a@a.com"
+                android:textSize="18sp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="5dp"/>
+
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/address">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:visibility="gone"
                     android:id="@+id/editTextAddress"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textPostalAddress"
-                    android:focusable="false"/>
+                    android:inputType="textPostalAddress" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -60,11 +79,11 @@
                 android:hint="@string/phone_number">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:visibility="gone"
                     android:id="@+id/editTextPhoneNum"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="phone"
-                    android:focusable="false"/>
+                    android:inputType="phone" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -105,6 +124,16 @@
                 android:layout_gravity="center"
                 android:visibility="gone"
                 android:text="@string/save"
+                android:textColor="@android:color/white" />
+
+            <Button
+                android:id="@+id/buttonEditProfile"
+                android:layout_marginTop="30dp"
+                android:background="@drawable/gradient_button_background"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/edit"
                 android:textColor="@android:color/white" />
 
         </LinearLayout>

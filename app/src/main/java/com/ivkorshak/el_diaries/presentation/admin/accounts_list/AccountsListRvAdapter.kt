@@ -1,5 +1,6 @@
 package com.ivkorshak.el_diaries.presentation.admin.accounts_list
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -9,7 +10,7 @@ import com.ivkorshak.el_diaries.data.model.Users
 import com.ivkorshak.el_diaries.databinding.AccountItemBinding
 
 class AccountsListRvAdapter(
-    private val accountsList: List<Users>,
+    private var accountsList: List<Users>,
     private val listener: (account: Users) -> Unit
 ) : RecyclerView.Adapter<AccountsListRvAdapter.AccountViewHolder>() {
 
@@ -33,6 +34,12 @@ class AccountsListRvAdapter(
             binding.imageButtonDeleteAccount.setOnClickListener { listener(account!!) }
         }
 
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun updateFoodList(newUsersList: List<Users>) {
+        accountsList = newUsersList.toMutableList()
+        notifyDataSetChanged()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AccountViewHolder {

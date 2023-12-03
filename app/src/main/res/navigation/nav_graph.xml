@@ -51,4 +51,18 @@
         android:name="com.ivkorshak.el_diaries.presentation.student.StudentClassRoomFragment"
         android:label="ClassRoom"
         tools:layout="@layout/fragment_student_class_room" />
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.ivkorshak.el_diaries.presentation.common.settings.SettingsFragment"
+        android:label="fragment_settings"
+        tools:layout="@layout/fragment_settings" >
+        <action
+            android:id="@+id/nav_settings_send_feedback"
+            app:destination="@id/sendFeedBackFragment" />
+    </fragment>
+    <dialog
+        android:id="@+id/languageFragment"
+        android:name="com.ivkorshak.el_diaries.presentation.common.language.LanguageFragment"
+        android:label="fragment_language"
+        tools:layout="@layout/fragment_language" />
 </navigation>

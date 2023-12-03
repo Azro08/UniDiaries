@@ -3,18 +3,15 @@ package com.ivkorshak.el_diaries.presentation.admin.accounts_list
 import android.app.AlertDialog
 import android.content.DialogInterface
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -46,12 +43,33 @@ class AccountsListFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        setMenu()
+        binding.textViewAddUser.setOnClickListener {
+            findNavController().navigate(R.id.nav_accounts_to_add_accounts)
+        }
         viewModelOutputs()
         binding.swipeRefreshLayout.setOnRefreshListener {
             viewModel.refresh()
             binding.swipeRefreshLayout.isRefreshing = false
         }
+        search()
+    }
+
+    private fun search() {
+        binding.editTextSearchStudent.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+
+            override fun afterTextChanged(s: Editable?) {
+                val searchText = s.toString().trim()
+                performSearch(searchText)
+            }
+        })
+    }
+
+    private fun performSearch(query: String) {
+        val filteredList = viewModel.filterFoodList(query)
+        rvAdapter?.updateFoodList(filteredList)
     }
 
     override fun onResume() {
@@ -132,23 +150,6 @@ class AccountsListFragment : Fragment() {
         binding.loadingGif.visibility = View.GONE
         binding.textViewError.visibility = View.VISIBLE
         binding.textViewError.text = errorMsg
-    }
-
-    private fun setMenu() {
-        requireActivity().addMenuProvider(object : MenuProvider {
-            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
-                menuInflater.inflate(R.menu.add_menu, menu)
-            }
-
-            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-                when (menuItem.itemId) {
-                    R.id.itemAdd -> {
-                        findNavController().navigate(R.id.nav_accounts_to_add_accounts)
-                    }
-                }
-                return true
-            }
-        }, viewLifecycleOwner, Lifecycle.State.RESUMED)
     }
 
     override fun onDestroy() {

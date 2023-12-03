@@ -4,6 +4,7 @@ import android.content.Context
 import com.google.gson.GsonBuilder
 import com.ivkorshak.el_diaries.data.api.UserService
 import com.ivkorshak.el_diaries.util.AuthManager
+import com.ivkorshak.el_diaries.util.LangUtils
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -21,6 +22,12 @@ object AppModule {
     @Singleton
     fun provideAuthManager(@ApplicationContext context: Context): AuthManager =
         AuthManager(context)
+
+    @Provides
+    @Singleton
+    fun provideLanguageUtils(@ApplicationContext context: Context) : LangUtils =
+        LangUtils(context)
+
 
     @Provides
     @Singleton

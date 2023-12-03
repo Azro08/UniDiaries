@@ -1,6 +1,8 @@
 package com.ivkorshak.el_diaries.presentation.teacher.students_list
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -53,6 +55,25 @@ class ClassRoomStudentsListFragment : Fragment() {
             binding.swipeRefreshLayout.isRefreshing = false
         }
         getStudents(classRoomId)
+        search()
+    }
+
+    private fun search() {
+        binding.editTextSearchStudent.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+
+            override fun afterTextChanged(s: Editable?) {
+                val searchText = s.toString().trim()
+                performSearch(searchText)
+            }
+        })
+    }
+
+    private fun performSearch(query: String) {
+        val filteredList = viewModel.filterFoodList(query)
+        studentsRvAdapter?.updateFoodList(filteredList)
     }
 
     private fun getStudents(roomID: String) {

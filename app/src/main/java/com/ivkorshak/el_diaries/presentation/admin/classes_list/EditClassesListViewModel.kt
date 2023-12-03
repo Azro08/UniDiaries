@@ -32,7 +32,7 @@ class EditClassesListViewModel @Inject constructor(
 
     private fun getClassRooms() = viewModelScope.launch {
         try {
-            repository.getClassRooms("Monday").let {
+            repository.getClassRooms("ПН").let {
                 if (it.isNotEmpty()) {
                     _classRooms.value = ScreenState.Success(it)
                 } else _classRooms.value = ScreenState.Error("No Classes Available")

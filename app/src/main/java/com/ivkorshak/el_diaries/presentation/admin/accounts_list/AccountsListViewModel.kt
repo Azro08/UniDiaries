@@ -32,6 +32,18 @@ class AccountsListViewModel @Inject constructor(
         getUsers()
     }
 
+    fun filterFoodList(query: String): List<Users> {
+        return when (val currentState = _users.value) {
+            is ScreenState.Success -> {
+                currentState.data?.filter { user ->
+                    user.lastName.contains(query, ignoreCase = true)
+                } ?: emptyList()
+            }
+
+            else -> emptyList()
+        }
+    }
+
     private fun getUsers() = viewModelScope.launch {
         _users.value = ScreenState.Loading()
         try {
