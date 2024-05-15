@@ -60,4 +60,11 @@
     <string name="sun">Sun</string>
     <string name="english">English</string>
     <string name="russian">Russian</string>
+    <string name="add_note">Add Note</string>
+    <string name="sources">Sources</string>
+    <string name="calendar">Calendar</string>
+    <string name="title">Title</string>
+    <string name="text">Text</string>
+    <string name="priority">Priority</string>
+    <string name="cant_load_class_details">Cant load class details</string>
 </resources>

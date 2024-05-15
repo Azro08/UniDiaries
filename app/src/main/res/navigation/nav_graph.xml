@@ -65,4 +65,27 @@
         android:name="com.ivkorshak.el_diaries.presentation.common.language.LanguageFragment"
         android:label="fragment_language"
         tools:layout="@layout/fragment_language" />
+    <fragment
+        android:id="@+id/calendarFragment"
+        android:name="com.ivkorshak.el_diaries.presentation.common.calendar.CalendarFragment"
+        android:label="fragment_calendar"
+        tools:layout="@layout/fragment_calendar" >
+        <action
+            android:id="@+id/nav_calendar_details"
+            app:destination="@id/calendarDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/calendarDetailsFragment"
+        android:name="com.ivkorshak.el_diaries.presentation.common.calendar.notes.NotesListFragment"
+        android:label="fragment_calendar_details"
+        tools:layout="@layout/fragment_notes_list" >
+        <action
+            android:id="@+id/nav_notes_list_add_note"
+            app:destination="@id/addNoteFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addNoteFragment"
+        android:name="com.ivkorshak.el_diaries.presentation.common.calendar.add_note.AddNoteFragment"
+        android:label="fragment_add_note"
+        tools:layout="@layout/fragment_add_note" />
 </navigation>

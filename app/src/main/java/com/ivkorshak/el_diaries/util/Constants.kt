@@ -6,6 +6,7 @@ import java.util.Locale
 import kotlin.random.Random
 
 object Constants {
+    const val DATE_KEY: String = "date_key"
     const val SHARED_PREF_NAME = "user_pref"
     const val USER_KEY = "user_key"
     const val ROLE_KEY = "role_key"
@@ -38,5 +39,11 @@ object Constants {
         val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
         return dateFormat.format(Date())
     }
+
+    fun getFullDateString(date: Date) : String{
+        val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+        return dateFormat.format(date)
+    }
+
 
 }

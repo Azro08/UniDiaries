@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@color/white"
+    tools:context=".presentation.common.calendar.CalendarFragment">
+
+    <TextView
+        android:id="@+id/text_view_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:textSize="22sp"
+        android:layout_marginTop="10dp"
+        android:textStyle="bold"
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@color/black"
+        tools:text="TextView" />
+
+    <com.github.sundeepk.compactcalendarview.CompactCalendarView
+        android:id="@+id/compact_calendar_view"
+        android:layout_width="fill_parent"
+        android:layout_height="350dp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        app:compactCalendarBackgroundColor="@color/white"
+        app:compactCalendarCurrentDayBackgroundColor="@color/darkBlue"
+        app:compactCalendarCurrentDayTextColor="@color/black"
+        app:compactCalendarCurrentSelectedDayBackgroundColor="@color/darkBlue"
+        app:compactCalendarCurrentSelectedDayTextColor="@color/white"
+        app:compactCalendarMultiEventIndicatorColor="@color/red"
+        app:compactCalendarShouldSelectFirstDayOfMonthOnScroll="false"
+        app:compactCalendarTargetHeight="350dp"
+        app:compactCalendarTextColor="@color/black"
+        app:compactCalendarTextSize="12sp" />
+
+</LinearLayout>

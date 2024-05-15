@@ -60,4 +60,11 @@
     <string name="sun">ВС</string>
     <string name="english">Английский</string>
     <string name="russian">Русский</string>
+    <string name="add_note">Добавить заметку</string>
+    <string name="sources">Источники</string>
+    <string name="calendar">Календарь</string>
+    <string name="title">Заголовок</string>
+    <string name="text">Текст</string>
+    <string name="priority">Приоритет</string>
+    <string name="cant_load_class_details">Невозможно загрузить детали класса</string>
 </resources>

@@ -57,6 +57,7 @@ class StudentsRvAdapter(
     }
 
     override fun onBindViewHolder(holder: StudentsViewHolder, position: Int) {
+        holder.setIsRecyclable(false)
         return holder.bind(studentList[position])
     }
 

@@ -35,6 +35,7 @@ class AddClassFragment : Fragment() {
     private val studentsInClass = arrayListOf<Students>()
     private var teacherFullName = ""
     private var teacherId = ""
+    private val weekDays = arrayOf(1, 2, 3, 4, 5, 6, 7)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -61,11 +62,7 @@ class AddClassFragment : Fragment() {
             R.layout.support_simple_spinner_dropdown_item,
             spinnerTeachers
         )
-        val weekDaysAdapter = ArrayAdapter(
-            requireContext(),
-            R.layout.support_simple_spinner_dropdown_item,
-            Constants.weekDays
-        )
+        val weekDaysAdapter = WeekDayAdapter(requireContext(), weekDays)
         binding.spinnerdayOfWeek.adapter = weekDaysAdapter
         binding.spinnerTeacher.adapter = teachersAdapter
     }
@@ -74,12 +71,8 @@ class AddClassFragment : Fragment() {
         val className = editTextClassName.text.toString()
         val classNum = editTextClassRoomNum.text.toString()
         val teacherFullName = spinnerTeacher.selectedItem.toString()
-        if (className.isEmpty() || classNum.isEmpty() || teacherFullName.isEmpty() ||
-            spinnerdayOfWeek.selectedItem.toString().isEmpty()
-        ) {
-            return false
-        }
-        return true
+        return !(className.isEmpty() || classNum.isEmpty() || teacherFullName.isEmpty() ||
+                spinnerdayOfWeek.selectedItem.toString().isEmpty())
     }
 
     private fun saveClass() {
@@ -87,7 +80,7 @@ class AddClassFragment : Fragment() {
         val className = binding.editTextClassName.text.toString()
         val classNumber: Int = binding.editTextClassRoomNum.text.toString().toInt()
         val classId = Constants.generateRandomId()
-        val dayOfWeek = binding.spinnerdayOfWeek.selectedItem.toString()
+        val dayOfWeek: Int = binding.spinnerdayOfWeek.selectedItemPosition + 1
         val classRoom = ClassRoom(
             id = classId,
             className = className,
@@ -101,7 +94,10 @@ class AddClassFragment : Fragment() {
             viewModel.createClassRoom(classRoom)
             viewModel.classRoomCreated.collect { state ->
                 when (state) {
-                    is ScreenState.Loading -> {}
+                    is ScreenState.Loading -> {
+                        //loading.....
+                    }
+
                     is ScreenState.Error -> Toast.makeText(
                         requireContext(),
                         state.message,
@@ -126,7 +122,10 @@ class AddClassFragment : Fragment() {
         lifecycleScope.launch {
             viewModel.students.collect { state ->
                 when (state) {
-                    is ScreenState.Loading -> {}
+                    is ScreenState.Loading -> {
+                        //loading.....
+                    }
+
                     is ScreenState.Error -> Toast.makeText(
                         requireContext(),
                         state.message,
@@ -153,7 +152,10 @@ class AddClassFragment : Fragment() {
             viewModel.getTeachers()
             viewModel.teachers.collect { state ->
                 when (state) {
-                    is ScreenState.Loading -> {}
+                    is ScreenState.Loading -> {
+                        //loading.....
+                    }
+
                     is ScreenState.Success -> {
                         spinnerTeachers.clear()
                         teachers.clear()
@@ -208,13 +210,16 @@ class AddClassFragment : Fragment() {
             viewModel.getClassRoom(id)
             viewModel.classRoom.collect { state ->
                 when (state) {
-                    is ScreenState.Loading -> {}
+                    is ScreenState.Loading -> {
+                        //loading.....
+                    }
+
                     is ScreenState.Success -> {
                         if (state.data != null) {
                             binding.editTextClassName.setText(state.data.className)
                             binding.editTextClassRoomNum.setText(state.data.roomNum.toString())
                             binding.spinnerdayOfWeek.setSelection(
-                                Constants.weekDays.indexOf(state.data.dayOfWeek)
+                                weekDays.indexOf(state.data.dayOfWeek)
                             )
                             studentsInClass.addAll(state.data.students)
                             displayStudent(studentsInClass)
