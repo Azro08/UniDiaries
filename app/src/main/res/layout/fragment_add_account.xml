@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp"
     android:background="@drawable/gradient_background"
+    android:padding="16dp"
     tools:context=".presentation.admin.add_account.AddAccountFragment">
 
 
@@ -27,7 +26,8 @@
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_gravity="center"
-                android:background="@drawable/app_logo" />
+                android:background="@drawable/app_logo"
+                android:importantForAccessibility="no" />
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cardView"
@@ -51,14 +51,17 @@
                     <!-- Email -->
                     <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/email">
+                        android:layout_height="wrap_content">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/editTextEmail"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:inputType="textEmailAddress" />
+                            android:drawableStart="@drawable/ic_email"
+                            android:drawablePadding="10dp"
+                            android:hint="@string/email"
+                            android:inputType="textEmailAddress"
+                            android:textColorHint="@color/darkGrayText" />
 
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -71,7 +74,10 @@
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/editTextFirstName"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content" />
+                            android:layout_height="wrap_content"
+                            android:drawableStart="@drawable/ic_person"
+                            android:drawablePadding="10dp"
+                            android:textColorHint="@color/darkGrayText" />
 
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -84,34 +90,43 @@
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/editTextLastName"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content" />
+                            android:layout_height="wrap_content"
+                            android:drawableStart="@drawable/ic_person"
+                            android:drawablePadding="10dp"
+                            android:textColorHint="@color/darkGrayText" />
 
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <!-- Password -->
                     <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/password">
+                        android:layout_height="wrap_content">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/editTextPassword"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:inputType="textPassword" />
+                            android:drawableStart="@drawable/ic_lock"
+                            android:drawablePadding="10dp"
+                            android:hint="@string/password"
+                            android:inputType="textPassword"
+                            android:textColorHint="@color/darkGrayText" />
 
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <!-- Address -->
                     <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/address">
+                        android:layout_height="wrap_content">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/editTextAddress"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content" />
+                            android:layout_height="wrap_content"
+                            android:drawableStart="@drawable/ic_map"
+                            android:drawablePadding="10dp"
+                            android:hint="@string/address"
+                            android:textColorHint="@color/darkGrayText" />
 
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -125,7 +140,10 @@
                             android:id="@+id/editTextPhoneNumber"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:inputType="phone" />
+                            android:drawableStart="@drawable/ic_call"
+                            android:drawablePadding="10dp"
+                            android:inputType="phone"
+                            android:textColorHint="@color/darkGrayText" />
 
                     </com.google.android.material.textfield.TextInputLayout>
 

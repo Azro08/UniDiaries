@@ -3,15 +3,14 @@ package com.ivkorshak.el_diaries.domain
 import com.google.firebase.auth.FirebaseAuth
 import com.ivkorshak.el_diaries.data.model.ClassRoom
 import com.ivkorshak.el_diaries.data.repository.ClassRoomRepository
-import com.ivkorshak.el_diaries.util.AuthManager
 import javax.inject.Inject
 
 class GetStudentsClassesUseCase @Inject constructor(
     private val repository: ClassRoomRepository,
-    private val firebaseAuth : FirebaseAuth
+    private val firebaseAuth: FirebaseAuth
 ) {
 
-    suspend operator fun invoke(weekDay : String) : List<ClassRoom>? {
+    suspend operator fun invoke(weekDay: Int): List<ClassRoom>? {
         val studentClasses = mutableListOf<ClassRoom>()
         val uid = firebaseAuth.currentUser?.uid ?: ""
         return try {

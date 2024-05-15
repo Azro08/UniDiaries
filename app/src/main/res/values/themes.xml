@@ -1,11 +1,16 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <!-- Base application theme. -->
-    <style name="Base.Theme.ElDiaries" parent="Theme.Material3.DayNight">
+    <style name="Base.Theme.ElDiaries" parent="Theme.Material3.Light">
         <!-- Customize your light theme here. -->
-        <item name="colorPrimary">@color/blue</item>
-        <item name="colorPrimaryVariant">@color/blue</item>
-        <item name="android:statusBarColor">@android:color/transparent</item>
-        <item name="android:windowLightStatusBar">true</item>
+        <item name="colorPrimary">@color/darkBlue</item>
+<!--        <item name="colorPrimaryVariant">@color/blue</item>-->
+<!--        <item name="android:statusBarColor">@android:color/transparent</item>-->
+<!--        <item name="android:windowLightStatusBar">true</item>-->
+    </style>
+
+    <style name="LoginTextInputLayoutStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="boxStrokeColor">@color/darkGrayText</item>
+        <item name="boxStrokeWidth">2dp</item>
     </style>
 
     <style name="Theme.ElDiaries" parent="Base.Theme.ElDiaries" />

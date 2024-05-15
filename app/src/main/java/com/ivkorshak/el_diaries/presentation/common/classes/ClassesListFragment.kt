@@ -31,7 +31,8 @@ class ClassesListFragment : Fragment() {
     private val viewModel: ClassesListViewModel by viewModels()
     @Inject
     lateinit var authManager: AuthManager
-    private var weekDay = "ПН"
+    private var weekDay = 1
+    private var weekDays = listOf(1, 2, 3, 4, 5, 6, 7)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -50,7 +51,7 @@ class ClassesListFragment : Fragment() {
     }
 
     private fun setWeeksDays() {
-        daysListRvAdapter = DaysOfWeekRvAdapter(Constants.weekDays) {
+        daysListRvAdapter = DaysOfWeekRvAdapter(weekDays) {
             weekDay = it
             viewModel.getClassRooms(it)
         }

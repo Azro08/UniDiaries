@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".presentation.admin.accounts_list.AccountsListFragment">
 
     <pl.droidsonroids.gif.GifImageView
@@ -22,16 +22,16 @@
         android:id="@+id/textViewError"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
         android:layout_gravity="center"
-        android:gravity="center"
+        android:layout_weight="1"
         android:fontFamily="cursive"
+        android:gravity="center"
         android:textSize="28sp"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:visibility="gone"
         tools:text="Error" />
 
     <LinearLayout
@@ -50,7 +50,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:background="@drawable/search_icon" />
+            android:background="@drawable/search_icon"
+            android:importantForAccessibility="no" />
 
 
         <EditText
@@ -58,6 +59,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/search"
+            android:importantForAutofill="no"
             android:inputType="text" />
 
     </LinearLayout>
@@ -68,8 +70,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginTop="4dp"
-        android:textColor="@color/black"
         android:text="@string/add_new_user"
+        android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/searchLayout" />
 
@@ -77,9 +79,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/add_icon"
-        app:layout_constraintStart_toStartOf="parent"
+        android:importantForAccessibility="no"
         app:layout_constraintEnd_toStartOf="@id/textViewAddUser"
-        app:layout_constraintTop_toBottomOf="@+id/searchLayout"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/searchLayout" />
 
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout

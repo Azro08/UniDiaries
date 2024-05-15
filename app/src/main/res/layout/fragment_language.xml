@@ -1,32 +1,132 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:background="@color/gray"
     android:padding="10dp"
     tools:context=".presentation.common.language.LanguageFragment">
 
+
     <TextView
+        android:id="@+id/title_language"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
         android:text="@string/language"
-        android:textSize="18sp"
-        android:textColor="@color/black"/>
+        android:textColor="@color/black"
+        android:textSize="26sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <Spinner
-        android:id="@+id/spinnerLanguage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+    <View
+        android:id="@+id/line"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginTop="16dp"
+        android:background="@color/lightGray"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/title_language" />
 
-    <Button
-        android:id="@+id/buttonSaveLang"
+
+    <View
+        android:id="@+id/lan_en"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="40dp"
+        android:background="@drawable/bg_view_date"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/line" />
+
+    <ImageView
+        android:id="@+id/checked_en"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/save"
-        android:layout_marginTop="10dp"
-        android:layout_gravity="center"/>
+        android:layout_marginEnd="20dp"
+        android:src="@drawable/ic_check"
+        app:layout_constraintBottom_toBottomOf="@id/lan_en"
+        app:layout_constraintEnd_toEndOf="@+id/lan_en"
+        android:visibility="gone"
+        app:layout_constraintTop_toTopOf="@id/lan_en"
+        android:importantForAccessibility="no" />
+
+    <ImageView
+        android:id="@+id/ic_en"
+        android:layout_width="26dp"
+        android:layout_height="26dp"
+        android:layout_marginStart="20dp"
+        android:src="@drawable/flag_uk"
+        app:layout_constraintBottom_toBottomOf="@id/lan_en"
+        app:layout_constraintStart_toStartOf="@id/lan_en"
+        app:layout_constraintTop_toTopOf="@id/lan_en"
+        android:importantForAccessibility="no" />
+
+    <TextView
+        android:id="@+id/text_en"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="14dp"
+        android:text="@string/english"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@id/lan_en"
+        app:layout_constraintStart_toEndOf="@id/ic_en"
+        app:layout_constraintTop_toTopOf="@id/lan_en" />
 
 
-</LinearLayout>
+    <View
+        android:id="@+id/lan_rus"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/bg_view_date"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/lan_en" />
+
+    <ImageView
+        android:id="@+id/checked_rus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="20dp"
+        android:src="@drawable/ic_check"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/lan_rus"
+        app:layout_constraintEnd_toEndOf="@+id/lan_rus"
+        app:layout_constraintTop_toTopOf="@id/lan_rus"
+        android:importantForAccessibility="no" />
+
+    <ImageView
+        android:id="@+id/ic_rus"
+        android:layout_width="26dp"
+        android:layout_height="26dp"
+        android:layout_marginStart="20dp"
+        android:src="@drawable/flag_rus"
+        app:layout_constraintBottom_toBottomOf="@id/lan_rus"
+        app:layout_constraintStart_toStartOf="@id/lan_rus"
+        app:layout_constraintTop_toTopOf="@id/lan_rus"
+        android:importantForAccessibility="no" />
+
+    <TextView
+        android:id="@+id/text_rus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="14dp"
+        android:text="@string/russian"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@id/lan_rus"
+        app:layout_constraintStart_toEndOf="@id/ic_rus"
+        app:layout_constraintTop_toTopOf="@id/lan_rus" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

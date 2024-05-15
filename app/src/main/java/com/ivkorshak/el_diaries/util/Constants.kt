@@ -15,8 +15,7 @@ object Constants {
     const val CLASS_ID = "class_id"
     const val STUDENT_ID = "studentId"
     const val LANGUAGE_KEY = "language_key"
-    val weekDays =
-        listOf("ПН", "ВТ", "СР", "ЧТ", "ПТ", "СБ", "ВС")
+
     val grades = listOf(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
     val skippedTime = listOf(0, 1, 2, 3, 4)
 

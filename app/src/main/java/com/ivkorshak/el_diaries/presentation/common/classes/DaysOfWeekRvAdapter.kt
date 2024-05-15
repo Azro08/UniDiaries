@@ -6,12 +6,10 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.ivkorshak.el_diaries.R
 import com.ivkorshak.el_diaries.databinding.DaysItemBinding
-import com.ivkorshak.el_diaries.util.AuthManager
-import javax.inject.Inject
 
 class DaysOfWeekRvAdapter(
-    private val days: List<String>,
-    private var listener: (dayOfWeek: String) -> Unit
+    private val days: List<Int>,
+    private var listener: (dayOfWeek: Int) -> Unit
 ) : RecyclerView.Adapter<DaysOfWeekRvAdapter.DaysOfWeekViewHolder>() {
 
     private var lastClickedIndex: Int = -1
@@ -19,15 +17,23 @@ class DaysOfWeekRvAdapter(
     class DaysOfWeekViewHolder(
         private var adapter: DaysOfWeekRvAdapter,
         private var binding: DaysItemBinding,
-        private val listener: (dayOfWeek: String) -> Unit
+        private val listener: (dayOfWeek: Int) -> Unit
     ) : RecyclerView.ViewHolder(binding.root) {
-        private var day: String? = null
+        private var day: Int? = null
 
-        @Inject
-        lateinit var authManager: AuthManager
-
-        fun bind(curDay: String, position: Int) {
-            binding.textViewDayOfWeek.text = curDay
+        fun bind(curDay: Int, position: Int) {
+            val context = binding.root.context
+            val weekDaysMap = mapOf(
+                1 to context.getString(R.string.mon),
+                2 to context.getString(R.string.tue),
+                3 to context.getString(R.string.wed),
+                4 to context.getString(R.string.thu),
+                5 to context.getString(R.string.fri),
+                6 to context.getString(R.string.sat),
+                7 to context.getString(R.string.sun)
+            )
+            val dayName = weekDaysMap[curDay] ?: ""
+            binding.textViewDayOfWeek.text = dayName
             day = curDay
 
             // Set the background based on `whether` this item was the last clicked one

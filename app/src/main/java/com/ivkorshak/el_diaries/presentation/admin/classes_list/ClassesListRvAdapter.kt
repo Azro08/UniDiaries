@@ -4,37 +4,46 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.ivkorshak.el_diaries.R
 import com.ivkorshak.el_diaries.data.model.ClassRoom
 import com.ivkorshak.el_diaries.databinding.ClassItemBinding
-import com.ivkorshak.el_diaries.util.AuthManager
-import javax.inject.Inject
+import com.ivkorshak.el_diaries.presentation.common.classes.ClassType
 
 class ClassesListRvAdapter(
     private val classesList: List<ClassRoom>,
     private val userRole: String,
     private val deleteListener: (classRoom: ClassRoom) -> Unit,
-    private val detailsListener : (classRoom : ClassRoom) -> Unit
+    private val detailsListener: (classRoom: ClassRoom) -> Unit
 ) : RecyclerView.Adapter<ClassesListRvAdapter.ClassRoomViewHolder>() {
 
     class ClassRoomViewHolder(
         private val userRole: String,
         listener: (classRoom: ClassRoom) -> Unit,
-        detailsListener : (classRoom : ClassRoom) -> Unit,
+        detailsListener: (classRoom: ClassRoom) -> Unit,
         private var binding: ClassItemBinding
     ) : RecyclerView.ViewHolder(binding.root) {
         private var classRoom: ClassRoom? = null
-        fun bind(curClassRoom: ClassRoom) {
+        fun bind(curClassRoom: ClassRoom) = with(binding) {
             if (userRole != "admin") {
-                binding.imageButtonDeleteClass.visibility = View.GONE
+                imageButtonDeleteClass.visibility = View.GONE
             }
-            binding.textViewClassName.text = curClassRoom.className
-            binding.textViewRoomNum.text = curClassRoom.roomNum.toString()
+            textViewClassStartTime.text = curClassRoom.startTime
+            textViewClassEndTime.text = curClassRoom.endTime
+            textViewClassName.text = curClassRoom.className
+            textViewRoomNum.text = curClassRoom.roomNum.toString()
+
+            when (curClassRoom.classType) {
+                ClassType.LECTURE.name -> imageViewClassType.setBackgroundResource(R.drawable.lecture_shape)
+                ClassType.PRACTICE.name -> imageViewClassType.setBackgroundResource(R.drawable.pz_shape)
+                ClassType.LABORATORY.name -> imageViewClassType.setBackgroundResource(R.drawable.lab_shape)
+            }
+
             classRoom = curClassRoom
         }
 
         init {
             binding.imageButtonDeleteClass.setOnClickListener { listener(classRoom!!) }
-            binding.layoutContainer.setOnClickListener{detailsListener(classRoom!!)}
+            binding.layoutContainer.setOnClickListener { detailsListener(classRoom!!) }
         }
 
     }

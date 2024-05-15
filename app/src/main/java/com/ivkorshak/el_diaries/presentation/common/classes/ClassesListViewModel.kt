@@ -19,13 +19,13 @@ class ClassesListViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val _classRooms = MutableStateFlow<ScreenState<List<ClassRoom>?>>(ScreenState.Loading())
-    val classRooms: MutableStateFlow<ScreenState<List<ClassRoom>?>> = _classRooms
+    val classRooms get()  = _classRooms
 
-    fun refresh(weekDay: String) {
+    fun refresh(weekDay: Int) {
         getClassRooms(weekDay)
     }
 
-    fun getClassRooms(weekDay: String) = viewModelScope.launch {
+    fun getClassRooms(weekDay: Int) = viewModelScope.launch {
         try {
             repository.getClassRooms(weekDay).let {
                 if (it.isNotEmpty()) {
@@ -37,7 +37,7 @@ class ClassesListViewModel @Inject constructor(
         }
     }
 
-    fun getStudentsClasses(weekDay: String) = viewModelScope.launch {
+    fun getStudentsClasses(weekDay: Int) = viewModelScope.launch {
         try {
             useCase.invoke(weekDay).let {
                 if (!it.isNullOrEmpty()) {

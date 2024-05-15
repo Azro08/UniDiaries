@@ -37,7 +37,7 @@ class AuthActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.buttonLogin.setOnClickListener {
-            if (binding.editTextLoginEmail.text.isNotEmpty() && binding.editTextLoginPassword.text.isNotEmpty())login()
+            if (binding.editTextLoginEmail.text.isNotEmpty() && binding.editTextLoginPassword.text.isNotEmpty()) login()
             else Toast.makeText(this, getString(R.string.fillup_fields), Toast.LENGTH_SHORT).show()
         }
 
@@ -65,12 +65,20 @@ class AuthActivity : AppCompatActivity() {
         lifecycleScope.launch {
             viewModel.userRole.collect {
                 when (it) {
-                    is ScreenState.Loading -> {}
+                    is ScreenState.Loading -> {
+                        //screen loading
+                    }
+
                     is ScreenState.Success -> {
                         if (it.data != null) {
                             navToUserActivity(it.data)
-                        } else Toast.makeText(this@AuthActivity, "Can't get user role", Toast.LENGTH_LONG).show()
+                        } else Toast.makeText(
+                            this@AuthActivity,
+                            "Can't get user role",
+                            Toast.LENGTH_LONG
+                        ).show()
                     }
+
                     is ScreenState.Error -> {
                         Toast.makeText(this@AuthActivity, it.message, Toast.LENGTH_LONG).show()
                         Log.d("AuthActivity", "Error: ${it.message}")

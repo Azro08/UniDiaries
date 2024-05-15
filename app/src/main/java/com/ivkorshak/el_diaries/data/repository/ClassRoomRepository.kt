@@ -19,7 +19,7 @@ class ClassRoomRepository @Inject constructor(
     private val classRoomsCollection =
         firestore.collection("classRooms")
 
-    suspend fun getClassRooms(weekDay: String): List<ClassRoom> {
+    suspend fun getClassRooms(weekDay: Int): List<ClassRoom> {
         val classRoomsList = mutableListOf<ClassRoom>()
 
         val userRole = authManager.getRole()

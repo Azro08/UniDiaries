@@ -26,12 +26,12 @@ class SettingsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.textViewLanguage.setOnClickListener {
+        binding.cardLanguage.setOnClickListener {
             val languageFragment = LanguageFragment()
             languageFragment.show(parentFragmentManager, "languageFragment")
 
         }
-        binding.textViewFeedback.setOnClickListener {
+        binding.cardFeedback.setOnClickListener {
             findNavController().navigate(R.id.nav_settings_send_feedback)
         }
 

@@ -48,4 +48,16 @@
     <string name="total">total</string>
     <string name="h">h</string>
     <string name="fillup_fields">Fill up all fields</string>
+    <string name="enter_your_email">Enter your email</string>
+    <string name="enter_your_password">Enter your password</string>
+    <string name="login_account">Login account</string>
+    <string name="mon">Mon</string>
+    <string name="tue">Tue</string>
+    <string name="wed">Wed</string>
+    <string name="thu">Thu</string>
+    <string name="fri">Fri</string>
+    <string name="sat">Sat</string>
+    <string name="sun">Sun</string>
+    <string name="english">English</string>
+    <string name="russian">Russian</string>
 </resources>
