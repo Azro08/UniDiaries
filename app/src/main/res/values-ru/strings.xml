@@ -48,4 +48,16 @@
     <string name="total">Общий</string>
     <string name="h">ч</string>
     <string name="fillup_fields">Надо запольнить все поля</string>
+    <string name="enter_your_email">Введите свою электронную почту</string>
+    <string name="enter_your_password">Введите пароль</string>
+    <string name="login_account">Авторизация</string>
+    <string name="mon">ПН</string>
+    <string name="tue">ВТ</string>
+    <string name="wed">СР</string>
+    <string name="thu">ЧТ</string>
+    <string name="fri">ПТ</string>
+    <string name="sat">СБ</string>
+    <string name="sun">ВС</string>
+    <string name="english">Английский</string>
+    <string name="russian">Русский</string>
 </resources>
