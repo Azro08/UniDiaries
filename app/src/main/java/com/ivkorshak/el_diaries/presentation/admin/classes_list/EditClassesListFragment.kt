@@ -1,6 +1,7 @@
 package com.ivkorshak.el_diaries.presentation.admin.classes_list
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -44,16 +45,19 @@ class EditClassesListFragment : Fragment() {
         }
         viewModelOutputs()
         binding.swipeRefreshLayout.setOnRefreshListener {
-            viewModel.refresh()
+            viewModelOutputs()
             binding.swipeRefreshLayout.isRefreshing = false
         }
     }
 
     private fun viewModelOutputs() {
         lifecycleScope.launch {
+            viewModel.getClassRooms()
             viewModel.classRooms.collect { state ->
                 when (state) {
-                    is ScreenState.Loading -> {}
+                    is ScreenState.Loading -> {
+                        //loading....
+                    }
                     is ScreenState.Success -> {
                         binding.loadingGif.visibility = View.GONE
                         binding.rvClassesList.visibility = View.VISIBLE
@@ -70,6 +74,7 @@ class EditClassesListFragment : Fragment() {
     }
 
     private fun displayClassRooms(data: List<ClassRoom>) {
+        Log.d("ClassesRec", data.toString())
         rvAdapter = ClassesListRvAdapter(
             data,
             authManager.getRole(),
@@ -92,7 +97,9 @@ class EditClassesListFragment : Fragment() {
             viewModel.deleteClassRoom(classRoom.id)
             viewModel.classRoomDeleted.collect { state ->
                 when (state) {
-                    is ScreenState.Loading -> {}
+                    is ScreenState.Loading -> {
+                        //loading....
+                    }
                     is ScreenState.Success -> {
                         Toast.makeText(requireContext(), "Classroom deleted", Toast.LENGTH_SHORT)
                             .show()
@@ -113,7 +120,7 @@ class EditClassesListFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        viewModel.refresh()
+        viewModelOutputs()
     }
 
     override fun onDestroy() {

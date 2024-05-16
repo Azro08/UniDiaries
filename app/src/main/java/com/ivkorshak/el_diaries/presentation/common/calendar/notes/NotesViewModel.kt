@@ -21,8 +21,8 @@ class NotesViewModel @Inject constructor(
     private val _deleteNoteState = MutableStateFlow<ScreenState<String>>(ScreenState.Loading())
 //    val deleteNoteState = _deleteNoteState
 
-    fun getNotes(classRoomId: String) = viewModelScope.launch {
-        notesRepository.getNotes(classRoomId).let {
+    fun getNotes(classRoomId: String, date : String) = viewModelScope.launch {
+        notesRepository.getNotes(classRoomId, date).let {
             if (it.isNotEmpty()) _notes.value = ScreenState.Success(it)
             else _notes.value = ScreenState.Error("No notes found")
         }

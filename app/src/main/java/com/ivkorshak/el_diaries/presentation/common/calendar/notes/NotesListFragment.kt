@@ -1,10 +1,10 @@
 package com.ivkorshak.el_diaries.presentation.common.calendar.notes
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -26,6 +26,7 @@ class NotesListFragment : Fragment() {
     private var _binding: FragmentNotesListBinding? = null
     private val binding get() = _binding!!
     private var classRoomId = ""
+    private var date : String? = null
     private val viewModel: NotesViewModel by viewModels()
     private var notesRvAdapter: NotesRvAdapter? = null
 
@@ -41,8 +42,14 @@ class NotesListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         classRoomId = arguments?.getString(Constants.CLASS_ID) ?: ""
-        val date = arguments?.getString(Constants.DATE_KEY) ?: ""
-        getNotesList()
+        arguments?.getString(Constants.DATE_KEY)?.let {
+            date = it
+            getNotesList()
+        }
+        if (authManager.getRole() == Constants.TEACHER) binding.buttonAddNote.visibility =
+            View.VISIBLE
+        val screenTitle = getString(R.string.notes) + " " + date
+        binding.textViewTitle.text = screenTitle
         binding.buttonAddNote.setOnClickListener {
             val bundle =
                 bundleOf(Pair(Constants.CLASS_ID, classRoomId), Pair(Constants.DATE_KEY, date))
@@ -52,12 +59,12 @@ class NotesListFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        getNotesList()
+//        getNotesList()
     }
 
     private fun getNotesList() {
         lifecycleScope.launch {
-            viewModel.getNotes(classRoomId)
+            viewModel.getNotes(classRoomId = classRoomId, date = date!!)
             viewModel.notes.collect {
                 collectViewModelOutputs(it)
             }
@@ -71,7 +78,7 @@ class NotesListFragment : Fragment() {
             }
 
             is ScreenState.Error -> {
-                Toast.makeText(requireContext(), state.message, Toast.LENGTH_SHORT).show()
+                //show nothing
             }
 
             is ScreenState.Success -> {
@@ -83,7 +90,7 @@ class NotesListFragment : Fragment() {
     private fun displayNotes(notesList: List<Notes>) = with(binding) {
         notesRvAdapter = NotesRvAdapter(notesList, authManager.getRole()) {
             viewModel.deleteNote(it)
-            getNotesList()
+//            getNotesList()
         }
         recyclerViewNotes.layoutManager = LinearLayoutManager(requireContext())
         recyclerViewNotes.setHasFixedSize(true)

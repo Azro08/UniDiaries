@@ -13,12 +13,21 @@ class NotesRepository @Inject constructor(
 
     private val notesRef = firestore.collection("notes")
 
-    suspend fun getNotes(classRoomId: String): List<Notes> {
+    suspend fun getNotes(classRoomId: String, date : String): List<Notes> {
+        Log.d("NotesRepository", "getNotes:  $date")
         return try {
-            notesRef.whereEqualTo("classRoomId", classRoomId)
-                .get()
-                .await()
-                .toObjects(Notes::class.java)
+            if (date.isEmpty()) {
+                notesRef.whereEqualTo("classRoomId", classRoomId)
+                    .get()
+                    .await()
+                    .toObjects(Notes::class.java)
+            } else {
+                notesRef.whereEqualTo("classRoomId", classRoomId)
+                    .whereEqualTo("date", date)
+                    .get()
+                    .await()
+                    .toObjects(Notes::class.java)
+            }
         } catch (e: FirebaseException) {
             Log.d("NotesException", e.message.toString())
             emptyList()
@@ -29,10 +38,10 @@ class NotesRepository @Inject constructor(
         return try {
             notesRef.document(noteId).delete().await()
             "Done"
-        } catch (e: FirebaseException) ({
+        } catch (e: FirebaseException) {
             Log.d("NotesException", e.message.toString())
-            e.localizedMessage?.toString()
-        })!!
+            e.message.toString()
+        }
     }
 
     suspend fun addNote(note: Notes): Boolean {

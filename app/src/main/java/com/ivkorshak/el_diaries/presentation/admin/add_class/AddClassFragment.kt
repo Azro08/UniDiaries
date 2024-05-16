@@ -7,12 +7,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Toast
-import androidx.appcompat.R
+
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.ivkorshak.el_diaries.R
 import com.ivkorshak.el_diaries.data.model.ClassRoom
 import com.ivkorshak.el_diaries.data.model.Students
 import com.ivkorshak.el_diaries.data.model.Teacher
@@ -57,9 +58,11 @@ class AddClassFragment : Fragment() {
             else Toast.makeText(requireContext(), "Please fill all fields", Toast.LENGTH_SHORT)
                 .show()
         }
+
+        settClassTypes()
         val teachersAdapter = ArrayAdapter(
             requireContext(),
-            R.layout.support_simple_spinner_dropdown_item,
+            androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,
             spinnerTeachers
         )
         val weekDaysAdapter = WeekDayAdapter(requireContext(), weekDays)
@@ -67,12 +70,29 @@ class AddClassFragment : Fragment() {
         binding.spinnerTeacher.adapter = teachersAdapter
     }
 
+    private fun settClassTypes() {
+        val classTypes = listOf(
+            getString(R.string.lecture),
+            getString(R.string.practice),
+            getString(R.string.laboratory),
+        )
+        val classTypeAdapter = ArrayAdapter(
+            requireContext(),
+            androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,
+            classTypes
+        )
+        binding.spinnerClassType.adapter = classTypeAdapter
+    }
+
     private fun areAllFieldsFilled(): Boolean = with(binding) {
         val className = editTextClassName.text.toString()
         val classNum = editTextClassRoomNum.text.toString()
         val teacherFullName = spinnerTeacher.selectedItem.toString()
+        val startsAt = editTextStartsAt.text.toString()
+        val endsAt = editTextEndsAt.text.toString()
         return !(className.isEmpty() || classNum.isEmpty() || teacherFullName.isEmpty() ||
-                spinnerdayOfWeek.selectedItem.toString().isEmpty())
+                spinnerdayOfWeek.selectedItem.toString()
+                    .isEmpty() || startsAt.isEmpty() || endsAt.isEmpty())
     }
 
     private fun saveClass() {
@@ -81,6 +101,9 @@ class AddClassFragment : Fragment() {
         val classNumber: Int = binding.editTextClassRoomNum.text.toString().toInt()
         val classId = Constants.generateRandomId()
         val dayOfWeek: Int = binding.spinnerdayOfWeek.selectedItemPosition + 1
+        val startsAt = binding.editTextStartsAt.text.toString()
+        val endsAt = binding.editTextEndsAt.text.toString()
+        val classType = binding.spinnerClassType.selectedItem.toString()
         val classRoom = ClassRoom(
             id = classId,
             className = className,
@@ -88,7 +111,10 @@ class AddClassFragment : Fragment() {
             teacherId = teacherId,
             teacherFullName = teacherFullName,
             students = studentsInClass,
-            dayOfWeek = dayOfWeek
+            dayOfWeek = dayOfWeek,
+            startTime = startsAt,
+            endTime = endsAt,
+            classType = classType
         )
         lifecycleScope.launch {
             viewModel.createClassRoom(classRoom)
@@ -159,6 +185,7 @@ class AddClassFragment : Fragment() {
                     is ScreenState.Success -> {
                         spinnerTeachers.clear()
                         teachers.clear()
+                        spinnerTeachers.add("")
                         if (state.data.isNullOrEmpty()) Toast.makeText(
                             requireContext(),
                             "No teachers found",

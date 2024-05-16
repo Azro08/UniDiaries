@@ -58,7 +58,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.accountsListFragment,
                 R.id.classesListFragment,
                 R.id.profileFragment,
-                R.id.settingsFragment,
+                R.id.feedBackFragment,
             )
         )
 
@@ -66,7 +66,7 @@ class MainActivity : AppCompatActivity() {
             R.id.accountsListFragment,
             R.id.classesListFragment,
             R.id.profileFragment,
-            R.id.settingsFragment,
+            R.id.feedBackFragment,
         )
         // Show the bottom navigation view for top-level destinations only
         navController.addOnDestinationChangedListener { _, destination, _ ->

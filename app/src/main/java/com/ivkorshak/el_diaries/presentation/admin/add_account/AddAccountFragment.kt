@@ -15,6 +15,7 @@ import androidx.navigation.fragment.findNavController
 import com.google.firebase.auth.FirebaseAuth
 import com.ivkorshak.el_diaries.data.model.Users
 import com.ivkorshak.el_diaries.databinding.FragmentAddAccountBinding
+import com.ivkorshak.el_diaries.util.Constants
 import com.ivkorshak.el_diaries.util.ScreenState
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -31,7 +32,7 @@ class AddAccountFragment : Fragment() {
 
     @Inject
     lateinit var firebaseAuth: FirebaseAuth
-    private val roles = listOf("teacher", "student")
+    private val roles = listOf(Constants.TEACHER, Constants.STUDENT)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -43,8 +44,8 @@ class AddAccountFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding.buttonSave.setOnClickListener {
             if (areAllFieldsFilled()) createUser()
-                else Toast.makeText(requireContext(), "Please fill all fields", Toast.LENGTH_SHORT)
-                    .show()
+            else Toast.makeText(requireContext(), "Please fill all fields", Toast.LENGTH_SHORT)
+                .show()
         }
         binding.buttonPickBirthDate.setOnClickListener {
             showDatePickerDialog()
@@ -147,12 +148,8 @@ class AddAccountFragment : Fragment() {
         val birthDate = textViewBirthDate.text.toString()
         val role = spinnerRole.selectedItem.toString()
 
-        if (email.isEmpty() || firstName.isEmpty() || lastName.isEmpty() || password.isEmpty() || address.isEmpty() || phoneNumber.isEmpty() || birthDate.isEmpty() || role.isEmpty()
-        ) {
-            return false // At least one field is empty
-        }
-
-        return true // All fields are filled
+        // At least one field is empty
+        return !(email.isEmpty() || firstName.isEmpty() || lastName.isEmpty() || password.isEmpty() || address.isEmpty() || phoneNumber.isEmpty() || birthDate.isEmpty() || role.isEmpty()) // All fields are filled
     }
 
 }

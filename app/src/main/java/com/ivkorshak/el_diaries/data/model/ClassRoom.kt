@@ -12,5 +12,5 @@ data class ClassRoom(
     val endTime : String = "",
     val homeWorks : ArrayList<String> = arrayListOf(),
     val sourceList : ArrayList<String> = arrayListOf(),
-    val classType : String = ""
+    val classType : String = "",
         )

@@ -28,7 +28,7 @@
             android:layout_height="wrap_content"
             android:drawableStart="@drawable/ic_email"
             android:drawablePadding="10dp"
-            android:inputType="phone"
+            android:inputType="text"
             android:textColorHint="@color/darkGrayText" />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -36,16 +36,16 @@
     <!-- Phone Number -->
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="200dp"
         android:hint="@string/text">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/editTextNoteText"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:drawableStart="@drawable/edit_icon"
-            android:drawablePadding="10dp"
-            android:inputType="phone"
+            android:layout_height="match_parent"
+            android:gravity="start"
+
+            android:inputType="text"
             android:textColorHint="@color/darkGrayText" />
 
     </com.google.android.material.textfield.TextInputLayout>

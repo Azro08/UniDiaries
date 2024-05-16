@@ -45,5 +45,11 @@ object Constants {
         return dateFormat.format(date)
     }
 
+    fun dateStringToLong(dateString: String, pattern: String = "yyyy-MM-dd"): Long {
+        val formatter = SimpleDateFormat(pattern, Locale.getDefault())
+        val date = formatter.parse(dateString)
+        return date?.time ?: 0L
+    }
+
 
 }

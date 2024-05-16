@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ivkorshak.el_diaries.R
 import com.ivkorshak.el_diaries.data.model.ClassRoom
 import com.ivkorshak.el_diaries.databinding.ClassItemBinding
-import com.ivkorshak.el_diaries.presentation.common.classes.ClassType
 
 class ClassesListRvAdapter(
     private val classesList: List<ClassRoom>,
@@ -24,6 +23,7 @@ class ClassesListRvAdapter(
     ) : RecyclerView.ViewHolder(binding.root) {
         private var classRoom: ClassRoom? = null
         fun bind(curClassRoom: ClassRoom) = with(binding) {
+            val context = itemView.context
             if (userRole != "admin") {
                 imageButtonDeleteClass.visibility = View.GONE
             }
@@ -33,9 +33,12 @@ class ClassesListRvAdapter(
             textViewRoomNum.text = curClassRoom.roomNum.toString()
 
             when (curClassRoom.classType) {
-                ClassType.LECTURE.name -> imageViewClassType.setBackgroundResource(R.drawable.lecture_shape)
-                ClassType.PRACTICE.name -> imageViewClassType.setBackgroundResource(R.drawable.pz_shape)
-                ClassType.LABORATORY.name -> imageViewClassType.setBackgroundResource(R.drawable.lab_shape)
+                context.getString(R.string.lecture) -> imageViewClassType.setBackgroundResource(R.drawable.lecture_shape)
+                context.getString(R.string.practice) -> imageViewClassType.setBackgroundResource(
+                    R.drawable.pz_shape
+                )
+
+                context.getString(R.string.laboratory) -> imageViewClassType.setBackgroundResource(R.drawable.lab_shape)
             }
 
             classRoom = curClassRoom

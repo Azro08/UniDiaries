@@ -113,9 +113,12 @@ class UsersRepository @Inject constructor(
                     Log.d("getUserRole", userData.toString())
                     userData?.role
                 } else {
+                    Log.d("getUserRole", "Null2  $uid")
                     null
                 }
             } catch (e: Exception) {
+                Log.d("getUserRole", "Null  $uid")
+
                 null
             }
         }

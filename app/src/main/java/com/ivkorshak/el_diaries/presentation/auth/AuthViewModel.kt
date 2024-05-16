@@ -17,13 +17,9 @@ class AuthViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val _userRole = MutableStateFlow<ScreenState<String?>>(ScreenState.Loading())
-    val userRole: MutableStateFlow<ScreenState<String?>> = _userRole
+    val userRole get() =  _userRole
 
-    init {
-        getUserRole()
-    }
-
-    private fun getUserRole() = viewModelScope.launch {
+    fun getUserRole() = viewModelScope.launch {
         try {
             repository.getUserRole().let {role->
                 try {

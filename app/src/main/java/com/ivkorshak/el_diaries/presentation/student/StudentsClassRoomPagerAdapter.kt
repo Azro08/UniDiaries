@@ -12,7 +12,7 @@ class StudentsClassRoomPagerAdapter(fragment: Fragment, private val classRoomID:
     FragmentStateAdapter(fragment) {
 
     override fun getItemCount(): Int {
-        return 4 // Number of pages
+        return 5 // Number of pages
     }
 
     override fun createFragment(position: Int): Fragment {

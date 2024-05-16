@@ -29,10 +29,8 @@ class ClassRoomRepository @Inject constructor(
         // Define the Firestore query based on user role
         val query = when (userRole) {
             Constants.ADMIN -> classRoomsCollection // Load all classes
-            Constants.TEACHER -> classRoomsCollection.whereEqualTo(
-                "teacherId",
-                userId
-            ) // Load classes assigned to the teacher
+            Constants.TEACHER -> classRoomsCollection.whereEqualTo("teacherId", userId)
+                .whereEqualTo("dayOfWeek", weekDay) // Load classes assigned to the teacher
             Constants.STUDENT -> classRoomsCollection
 
             else -> null // Handle other roles or errors as needed
@@ -43,9 +41,7 @@ class ClassRoomRepository @Inject constructor(
                 Log.d("snapGetClassRooms", querySnapshot.documents.toString())
                 for (document in querySnapshot) {
                     val classRoom = document.toObject(ClassRoom::class.java)
-                    if (weekDay == classRoom.dayOfWeek) {
-                        classRoomsList.add(classRoom)
-                    }
+                    classRoomsList.add(classRoom)
                 }
             } catch (e: Exception) {
                 Log.d("getClassesException", e.message.toString())

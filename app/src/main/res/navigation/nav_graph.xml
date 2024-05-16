@@ -32,6 +32,9 @@
         <action
             android:id="@+id/nav_to_add_homework"
             app:destination="@id/addHomeworkFragment" />
+        <action
+            android:id="@+id/nav_classRoom_cal_details"
+            app:destination="@id/calendarDetailsFragment" />
     </fragment>
     <dialog
         android:id="@+id/studentFragmentDialog"
@@ -50,7 +53,11 @@
         android:id="@+id/studentClassRoomFragment"
         android:name="com.ivkorshak.el_diaries.presentation.student.StudentClassRoomFragment"
         android:label="ClassRoom"
-        tools:layout="@layout/fragment_student_class_room" />
+        tools:layout="@layout/fragment_student_class_room" >
+        <action
+            android:id="@+id/nav_classRoom_cal_details"
+            app:destination="@id/calendarDetailsFragment" />
+    </fragment>
     <fragment
         android:id="@+id/settingsFragment"
         android:name="com.ivkorshak.el_diaries.presentation.common.settings.SettingsFragment"
@@ -69,11 +76,7 @@
         android:id="@+id/calendarFragment"
         android:name="com.ivkorshak.el_diaries.presentation.common.calendar.CalendarFragment"
         android:label="fragment_calendar"
-        tools:layout="@layout/fragment_calendar" >
-        <action
-            android:id="@+id/nav_calendar_details"
-            app:destination="@id/calendarDetailsFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_calendar" />
     <fragment
         android:id="@+id/calendarDetailsFragment"
         android:name="com.ivkorshak.el_diaries.presentation.common.calendar.notes.NotesListFragment"

@@ -11,6 +11,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.ivkorshak.el_diaries.R
 import com.ivkorshak.el_diaries.databinding.ActivityAuthBinding
 import com.ivkorshak.el_diaries.presentation.admin.MainActivity
+import com.ivkorshak.el_diaries.presentation.auth.reset_password.ResetPasswordFragment
 import com.ivkorshak.el_diaries.presentation.student.StudentsActivity
 import com.ivkorshak.el_diaries.presentation.teacher.TeachersActivity
 import com.ivkorshak.el_diaries.util.AuthManager
@@ -34,11 +35,17 @@ class AuthActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         _binding = ActivityAuthBinding.inflate(layoutInflater)
+        supportActionBar?.hide()
         setContentView(binding.root)
 
         binding.buttonLogin.setOnClickListener {
             if (binding.editTextLoginEmail.text.isNotEmpty() && binding.editTextLoginPassword.text.isNotEmpty()) login()
             else Toast.makeText(this, getString(R.string.fillup_fields), Toast.LENGTH_SHORT).show()
+        }
+
+        binding.textViewResetPassword.setOnClickListener {
+            val resetPasswordFragment = ResetPasswordFragment()
+            resetPasswordFragment.show(supportFragmentManager, "ResetPasswordDialog")
         }
 
     }
@@ -63,6 +70,7 @@ class AuthActivity : AppCompatActivity() {
 
     private fun getUserRole() {
         lifecycleScope.launch {
+            viewModel.getUserRole()
             viewModel.userRole.collect {
                 when (it) {
                     is ScreenState.Loading -> {

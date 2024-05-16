@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -40,6 +40,8 @@
                         android:id="@+id/editTextClassName"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:drawableStart="@drawable/home_icon"
+                        android:drawablePadding="10dp"
                         android:inputType="textEmailAddress" />
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -55,7 +57,39 @@
                         android:id="@+id/editTextClassRoomNum"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="phone" />
+                        android:drawableStart="@drawable/home_icon"
+                        android:drawablePadding="10dp"
+                        android:inputType="number" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/starts_at">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/editTextStartsAt"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableStart="@drawable/time_ic"
+                        android:drawablePadding="10dp"
+                        android:inputType="time" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/ends_at">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/editTextEndsAt"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableStart="@drawable/time_ic"
+                        android:drawablePadding="10dp"
+                        android:inputType="time" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -74,10 +108,23 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/dayofweek"
+                    android:layout_marginTop="10dp"
                     android:textSize="18sp" />
 
                 <Spinner
                     android:id="@+id/spinnerdayOfWeek"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/class_type"
+                    android:layout_marginTop="10dp"
+                    android:textSize="18sp" />
+
+                <Spinner
+                    android:id="@+id/spinnerClassType"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
@@ -112,4 +159,4 @@
     </LinearLayout>
 
 
-</ScrollView>
+</androidx.core.widget.NestedScrollView>

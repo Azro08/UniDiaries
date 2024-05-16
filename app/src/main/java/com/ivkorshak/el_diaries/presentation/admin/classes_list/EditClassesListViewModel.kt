@@ -17,10 +17,10 @@ class EditClassesListViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val _classRooms = MutableStateFlow<ScreenState<List<ClassRoom>?>>(ScreenState.Loading())
-    val classRooms: MutableStateFlow<ScreenState<List<ClassRoom>?>> = _classRooms
+    val classRooms get() = _classRooms
 
     private val _classRoomDeleted = MutableStateFlow<ScreenState<String?>>(ScreenState.Loading())
-    val classRoomDeleted: MutableStateFlow<ScreenState<String?>> = _classRoomDeleted
+    val classRoomDeleted get() = _classRoomDeleted
 
     init {
         getClassRooms()
@@ -30,9 +30,9 @@ class EditClassesListViewModel @Inject constructor(
         getClassRooms()
     }
 
-    private fun getClassRooms() = viewModelScope.launch {
+    fun getClassRooms() = viewModelScope.launch {
         try {
-            repository.getClassRooms("ПН").let {
+            repository.getClassRooms(0).let {
                 if (it.isNotEmpty()) {
                     _classRooms.value = ScreenState.Success(it)
                 } else _classRooms.value = ScreenState.Error("No Classes Available")
@@ -42,7 +42,7 @@ class EditClassesListViewModel @Inject constructor(
         }
     }
 
-    suspend fun deleteClassRoom(id: String) = viewModelScope.launch {
+    fun deleteClassRoom(id: String) = viewModelScope.launch {
         try {
             repository.deleteClassRoom(id).let {
                 if (it == "Done") {
